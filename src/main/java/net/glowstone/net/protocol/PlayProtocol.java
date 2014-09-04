@@ -104,6 +104,7 @@ public final class PlayProtocol extends GlowProtocol {
         outbound(0x40, KickMessage.class, JsonCodec.class);
         outbound(0x41, ServerDifficultyMessage.class, ServerDifficultyCodec.class);
         outbound(0x42, CombatEventMessage.class, CombatEventCodec.class);
+        outbound(0x43, CameraMessage.class, CameraCodec.class);
         outbound(0x46, SetCompressionMessage.class, SetCompressionCodec.class);
     }
 }

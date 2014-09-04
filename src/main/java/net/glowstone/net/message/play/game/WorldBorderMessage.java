@@ -9,7 +9,7 @@ public class WorldBorderMessage implements Message {
     private double radius;
     private double oldRadius, newRadius;
     private long speed;
-    private double x,z;
+    private double x, z;
     private int portalTeleportBoundary, warningTime, warningBlocks;
 
     //SET_SIZE

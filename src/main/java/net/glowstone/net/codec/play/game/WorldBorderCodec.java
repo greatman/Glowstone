@@ -6,6 +6,7 @@ import io.netty.buffer.ByteBuf;
 import net.glowstone.net.message.play.game.WorldBorderMessage;
 
 import java.io.IOException;
+
 //TODO: the longs need to be a VarLong
 public class WorldBorderCodec implements Codec<WorldBorderMessage> {
     @Override
@@ -33,7 +34,7 @@ public class WorldBorderCodec implements Codec<WorldBorderMessage> {
             int portalTeleportBoundary = ByteBufUtils.readVarInt(buffer);
             int warningTime = ByteBufUtils.readVarInt(buffer);
             int warningBlocks = ByteBufUtils.readVarInt(buffer);
-            worldBorderMessage = new WorldBorderMessage(action,x,z,oldRadius,newRadius,speed,portalTeleportBoundary,warningTime,warningBlocks);
+            worldBorderMessage = new WorldBorderMessage(action, x, z, oldRadius, newRadius, speed, portalTeleportBoundary, warningTime, warningBlocks);
         } else if (action == WorldBorderMessage.SET_WARNING_TIME || action == WorldBorderMessage.SET_WARNING_BLOCKS) {
             int warningTime = ByteBufUtils.readVarInt(buffer);
             worldBorderMessage = new WorldBorderMessage(action, warningTime);

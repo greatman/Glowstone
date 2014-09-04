@@ -14,11 +14,11 @@ public class CombatEventCodec implements Codec<CombatEventMessage> {
         CombatEventMessage combatEventMessage;
         int event = buffer.readUnsignedByte();
 
-        if (event == 1) {
+        if (event == CombatEventMessage.END_COMBAT) {
             int duration = ByteBufUtils.readVarInt(buffer);
             int entityID = buffer.readInt();
             combatEventMessage = new CombatEventMessage(event, duration, entityID);
-        } else if (event == 2) {
+        } else if (event == CombatEventMessage.ENTITY_DEAD) {
             int playerID = ByteBufUtils.readVarInt(buffer);
             int entityID = buffer.readInt();
             String message = ByteBufUtils.readUTF8(buffer);

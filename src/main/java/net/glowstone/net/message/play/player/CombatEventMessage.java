@@ -4,6 +4,7 @@ import com.flowpowered.networking.Message;
 
 public class CombatEventMessage implements Message {
 
+    public static final int ENTER_COMBAT = 0, END_COMBAT = 1, ENTITY_DEAD = 2;
     private int event;
     private int duration;
     private int entityID, playerID;

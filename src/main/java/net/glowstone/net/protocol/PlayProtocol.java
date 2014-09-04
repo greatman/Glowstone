@@ -108,6 +108,8 @@ public final class PlayProtocol extends GlowProtocol {
         outbound(0x44, WorldBorderMessage.class, WorldBorderCodec.class);
         outbound(0x45, TitleMessage.class, TitleCodec.class);
         outbound(0x46, SetCompressionMessage.class, SetCompressionCodec.class);
+        outbound(0x47, PlayerListHeaderFooterMessage.class, PlayerListHeaderFooterCodec.class);
         outbound(0x48, ResourcePackSendMessage.class, ResourcePackSendCodec.class);
+        outbound(0x49, UpdateEntityNBTMessage.class, UpdateEntityNBTCodec.class);
     }
 }

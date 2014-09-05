@@ -506,6 +506,10 @@ public abstract class GlowEntity implements Entity {
         this.onGround = onGround;
     }
 
+    protected void setSize(float xz, float y) {
+        //todo Size stuff with bounding boxes.
+    }
+
     ////////////////////////////////////////////////////////////////////////////
     // Miscellaneous actions
 

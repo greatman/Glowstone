@@ -14,7 +14,7 @@ import java.util.UUID;
  */
 abstract class EntityStore<T extends GlowEntity> {
     private final String id;
-    private final Class<T> clazz;
+    protected final Class<T> clazz;
 
     public EntityStore(Class<T> clazz, String id) {
         this.id = id;

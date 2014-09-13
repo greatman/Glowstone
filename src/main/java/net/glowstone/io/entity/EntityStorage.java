@@ -50,7 +50,7 @@ public final class EntityStorage {
         bind(new PigStore());
         bind(new SheepStore());
         bind(new ZombieStore());
-
+        bind(new PaintingStore());
     }
 
     /**

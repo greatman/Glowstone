@@ -20,12 +20,14 @@ import net.glowstone.entity.monsters.GlowZombie;
 import net.glowstone.entity.objects.GlowItem;
 import net.glowstone.entity.projectiles.GlowArrow;
 import net.glowstone.entity.projectiles.GlowEgg;
+import net.glowstone.entity.objects.GlowPainting;
 import net.glowstone.io.WorldMetadataService.WorldFinalValues;
 import net.glowstone.io.WorldStorageProvider;
 import net.glowstone.io.anvil.AnvilWorldStorageProvider;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.weather.ThunderChangeEvent;
@@ -1148,6 +1150,8 @@ public final class GlowWorld implements World {
             entity = new GlowPigZombie(location);
         } else if (Sheep.class.isAssignableFrom(clazz)) {
             entity = new GlowSheep(location);
+        } else if (Painting.class.isAssignableFrom(clazz)) {
+            entity = new GlowPainting(location, Art.KEBAB, BlockFace.SOUTH);
         }
         return (T) entity;
 

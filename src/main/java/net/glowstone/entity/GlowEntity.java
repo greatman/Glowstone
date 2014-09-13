@@ -203,7 +203,7 @@ public abstract class GlowEntity implements Entity {
      * Get the direction (SOUTH, WEST, NORTH, or EAST) this entity is facing.
      * @return The cardinal BlockFace of this entity.
      */
-    public BlockFace getDirection() {
+    public BlockFace getFacingDirection() {
         double rot = getLocation().getYaw() % 360;
         if (rot < 0) {
             rot += 360.0;

@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 
 class PaintingStore extends EntityStore<GlowPainting> {
+
     public PaintingStore() {
         super(GlowPainting.class, "Painting");
     }

@@ -1,22 +1,16 @@
 package net.glowstone.entity.passive;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import com.flowpowered.networking.Message;
-
 import net.glowstone.entity.GlowAmbient;
 import net.glowstone.net.message.play.entity.EntityHeadRotationMessage;
 import net.glowstone.net.message.play.entity.SpawnMobMessage;
 import net.glowstone.util.Position;
-
 import org.bukkit.Location;
-import org.bukkit.entity.Ambient;
 import org.bukkit.entity.Bat;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Monster;
-import org.bukkit.entity.Player;
 
+import java.util.LinkedList;
+import java.util.List;
 
 public class GlowBat extends GlowAmbient implements Bat {
 

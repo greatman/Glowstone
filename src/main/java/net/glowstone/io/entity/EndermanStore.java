@@ -1,33 +1,26 @@
 package net.glowstone.io.entity;
 
-import net.glowstone.entity.monsters.GlowCreeper;
 import net.glowstone.entity.monsters.GlowEnderman;
 import net.glowstone.util.nbt.CompoundTag;
-
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.material.MaterialData;
 
-public class EndermanStore extends MonsterStore<GlowEnderman>
-{
-    public EndermanStore()
-    {
+public class EndermanStore extends MonsterStore<GlowEnderman> {
+
+    public EndermanStore() {
         super(GlowEnderman.class, "Creeper");
     }
 
     @Override
-    public void load(GlowEnderman entity, CompoundTag compound)
-    {
+    public void load(GlowEnderman entity, CompoundTag compound) {
         super.load(entity, compound);
-        if (compound.containsKey("carried"))
-        { // TODO possibly make this cleaner
+        if (compound.containsKey("carried")) { // TODO possibly make this cleaner
             Material material;
             MaterialData materialData;
             short id = compound.getShort("carried");
             short carriedId = compound.getShort("carriedData");
             material = Material.getMaterial(id);
-            if (material != null)
-            {
+            if (material != null) {
                 materialData = new MaterialData(material, (byte) carriedId);
                 entity.setCarriedMaterial(materialData);
             }
@@ -35,8 +28,7 @@ public class EndermanStore extends MonsterStore<GlowEnderman>
     }
 
     @Override
-    public void save(GlowEnderman entity, CompoundTag tag)
-    {
+    public void save(GlowEnderman entity, CompoundTag tag) {
         super.save(entity, tag);
         if (entity.getCarriedMaterial() != null) {
             tag.putShort("carried", entity.getCarriedMaterial().getItemTypeId());

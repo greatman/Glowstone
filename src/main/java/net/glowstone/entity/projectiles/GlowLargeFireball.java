@@ -7,7 +7,11 @@ import org.bukkit.projectiles.ProjectileSource;
 
 public class GlowLargeFireball extends GlowFireball implements LargeFireball {
 
-    public GlowLargeFireball(Location location,  ProjectileSource shooter) {
+    public GlowLargeFireball(Location location) {
+        this(location, null);
+    }
+
+    public GlowLargeFireball(Location location, ProjectileSource shooter) {
         super(location, EntityType.FIREBALL, shooter);
     }
 }

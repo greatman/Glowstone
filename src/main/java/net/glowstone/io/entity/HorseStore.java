@@ -1,20 +1,20 @@
 package net.glowstone.io.entity;
 
-import java.util.UUID;
-
 import net.glowstone.entity.passive.GlowHorse;
 import net.glowstone.io.nbt.NbtSerialization;
 import net.glowstone.util.nbt.CompoundTag;
 import net.glowstone.util.nbt.TagType;
-
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Horse.Style;
 import org.bukkit.entity.Horse.Variant;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 class HorseStore extends AgeableStore<GlowHorse> {
 
+    public static final String ITEMS_KEY = "Items";
     private static final String EATING_HAYSTACK_KEY = "EatingHaystack";
     private static final String BRED_KEY = "Bred";
     private static final String CHESTED_HORSE_KEY = "ChestedHorse";
@@ -27,7 +27,6 @@ class HorseStore extends AgeableStore<GlowHorse> {
     private static final String ARMOR_ITEM_KEY = "ArmorItem";
     private static final String SADDLE_ITEM_KEY = "SaddleItem";
     private static final String SADDLE_KEY = "Saddle";
-    public static final String ITEMS_KEY = "Items";
 
     public HorseStore() {
         super(GlowHorse.class, "Horse");
@@ -47,8 +46,9 @@ class HorseStore extends AgeableStore<GlowHorse> {
         entity.setVariant(Variant.values()[compound.getInt(VARIANT_KEY)]);
         entity.setTemper(compound.getInt(TEMPER_Key));
         entity.setTamed(compound.getBool(TAME_KEY));
-        if (compound.containsKey(OWNER_UUID_KEY))
+        if (compound.containsKey(OWNER_UUID_KEY)) {
             entity.setOwnerUUID(UUID.fromString(compound.getString(OWNER_UUID_KEY)));
+        }
         if (compound.containsKey(ARMOR_ITEM_KEY)) {
             entity.getInventory().setArmor(NbtSerialization.readItem(compound.getCompound(ARMOR_ITEM_KEY)));
         }
@@ -58,7 +58,8 @@ class HorseStore extends AgeableStore<GlowHorse> {
             entity.getInventory().setSaddle(new ItemStack(Material.SADDLE));
         }
         if (entity.isCarryingChest()) {
-            compound.putList(ITEMS_KEY, TagType.COMPOUND, NbtSerialization.writeInventory(entity.getInventory().getContents(), entity.getInventory().getContents().length));
+            compound.putList(ITEMS_KEY, TagType.COMPOUND,
+                             NbtSerialization.writeInventory(entity.getInventory().getContents(), entity.getInventory().getContents().length));
         }
 
     }

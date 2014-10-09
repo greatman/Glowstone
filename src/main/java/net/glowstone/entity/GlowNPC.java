@@ -1,7 +1,6 @@
 package net.glowstone.entity;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Animals;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.NPC;
 

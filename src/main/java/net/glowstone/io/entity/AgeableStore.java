@@ -1,13 +1,10 @@
 package net.glowstone.io.entity;
 
-import java.lang.reflect.Constructor;
-
 import net.glowstone.entity.GlowAgeable;
-import net.glowstone.entity.passive.GlowCow;
 import net.glowstone.util.nbt.CompoundTag;
-
 import org.bukkit.Location;
-import org.bukkit.entity.Cow;
+
+import java.lang.reflect.Constructor;
 
 class AgeableStore<T extends GlowAgeable> extends CreatureStore<T> {
 
@@ -16,20 +13,19 @@ class AgeableStore<T extends GlowAgeable> extends CreatureStore<T> {
     public AgeableStore(Class<T> clazz, String id) {
         super(clazz, id);
         Constructor<T> ctor = null;
-        try
-        {
+        try {
             ctor = clazz.getConstructor(Location.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.constructor = ctor;    }
+        this.constructor = ctor;
+    }
 
     @Override
     public T createEntity(Location location, CompoundTag compound) {
         try {
             return constructor.newInstance(location);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new UnsupportedOperationException("Not implemented yet.");
         }

@@ -1,7 +1,7 @@
 package net.glowstone.io.entity;
 
 import net.glowstone.GlowWorld;
-import net.glowstone.entity.GlowMonster;
+import net.glowstone.entity.GlowEntity;
 import net.glowstone.entity.monsters.GlowBlaze;
 import net.glowstone.entity.monsters.GlowCaveSpider;
 import net.glowstone.entity.monsters.GlowGiant;
@@ -13,7 +13,6 @@ import net.glowstone.entity.monsters.GlowWitch;
 import net.glowstone.entity.monsters.GlowZombie;
 import net.glowstone.entity.passive.GlowChicken;
 import net.glowstone.entity.passive.GlowCow;
-import net.glowstone.entity.GlowEntity;
 import net.glowstone.entity.passive.GlowMushroomCow;
 import net.glowstone.io.nbt.NbtSerialization;
 import net.glowstone.util.nbt.CompoundTag;
@@ -29,21 +28,16 @@ import java.util.Map;
  */
 public final class EntityStorage {
 
-    private EntityStorage() {
-    }
-
     /**
      * A table which maps entity ids to compound readers. This is generally used to map
      * stored entities to actual entities.
      */
     private static final Map<String, EntityStore<?>> idTable = new HashMap<>();
-
     /**
      * A table which maps entities to stores. This is generally used to map
      * entities being stored.
      */
     private static final Map<Class<? extends GlowEntity>, EntityStore<?>> classTable = new HashMap<>();
-
     /**
      * Populates the maps with stores.
      */
@@ -90,10 +84,12 @@ public final class EntityStorage {
 
         // Minecarts
 
-
         // Various
         bind(new ItemStore());
         bind(new PaintingStore());
+    }
+
+    private EntityStorage() {
     }
 
     /**

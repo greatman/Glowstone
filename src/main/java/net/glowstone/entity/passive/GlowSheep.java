@@ -1,7 +1,6 @@
 package net.glowstone.entity.passive;
 
 import net.glowstone.entity.GlowAnimal;
-
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -9,9 +8,9 @@ import org.bukkit.entity.Sheep;
 
 public class GlowSheep extends GlowAnimal implements Sheep {
 
-    private boolean isSheared;
+    private boolean isSheared = false;
 
-    private DyeColor color;
+    private DyeColor color = DyeColor.WHITE;
 
     /**
      * Creates a new Sheep.

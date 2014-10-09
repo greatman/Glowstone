@@ -1,7 +1,6 @@
 package net.glowstone.entity.passive;
 
 import net.glowstone.entity.GlowAnimal;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.EntityType;

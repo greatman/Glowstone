@@ -1,17 +1,14 @@
 package net.glowstone.io.entity;
 
-import java.util.Map;
-
+import com.google.common.collect.ImmutableMap;
 import net.glowstone.entity.passive.GlowRabbit;
 import net.glowstone.util.nbt.CompoundTag;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Rabbit;
 
-import com.google.common.collect.ImmutableMap;
+import java.util.Map;
 
-class RabbitStore extends AgeableStore<GlowRabbit>
-{
+class RabbitStore extends AgeableStore<GlowRabbit> {
 
     private final Map<Integer, Rabbit.RabbitType> rabbitTypeMap = ImmutableMap.<Integer, Rabbit.RabbitType>builder()
             .put(0, Rabbit.RabbitType.BROWN)
@@ -23,28 +20,23 @@ class RabbitStore extends AgeableStore<GlowRabbit>
             .put(99, Rabbit.RabbitType.KILLER)
             .build();
 
-    @Override
-    public GlowRabbit createEntity(Location location, CompoundTag compound)
-    {
-        return new GlowRabbit(location);
-    }
-
-    public RabbitStore()
-    {
+    public RabbitStore() {
         super(GlowRabbit.class, "Rabbit");
     }
 
     @Override
-    public void load(GlowRabbit entity, CompoundTag compound)
-    {
+    public GlowRabbit createEntity(Location location, CompoundTag compound) {
+        return new GlowRabbit(location);
+    }
+
+    @Override
+    public void load(GlowRabbit entity, CompoundTag compound) {
         super.load(entity, compound);
         Rabbit.RabbitType rabbitType;
         int rabbitId = compound.getInt("RabbitType");
-        if (rabbitTypeMap.containsKey(rabbitId))
-        {
+        if (rabbitTypeMap.containsKey(rabbitId)) {
             rabbitType = rabbitTypeMap.get(rabbitId);
-        } else
-        {
+        } else {
             rabbitType = Rabbit.RabbitType.BROWN;
         }
         entity.setRabbitType(rabbitType);
@@ -52,8 +44,7 @@ class RabbitStore extends AgeableStore<GlowRabbit>
     }
 
     @Override
-    public void save(GlowRabbit entity, CompoundTag tag)
-    {
+    public void save(GlowRabbit entity, CompoundTag tag) {
         super.save(entity, tag);
     }
 }

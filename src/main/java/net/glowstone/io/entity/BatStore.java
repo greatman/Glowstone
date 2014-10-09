@@ -2,7 +2,6 @@ package net.glowstone.io.entity;
 
 import net.glowstone.entity.passive.GlowBat;
 import net.glowstone.util.nbt.CompoundTag;
-
 import org.bukkit.Location;
 
 class BatStore extends LivingEntityStore<GlowBat> {
@@ -12,8 +11,7 @@ class BatStore extends LivingEntityStore<GlowBat> {
     }
 
     @Override
-    public GlowBat createEntity(Location location, CompoundTag compound)
-    {
+    public GlowBat createEntity(Location location, CompoundTag compound) {
         return new GlowBat(location);
     }
 

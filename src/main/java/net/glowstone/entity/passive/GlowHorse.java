@@ -1,14 +1,13 @@
 package net.glowstone.entity.passive;
 
-import java.util.UUID;
-
 import net.glowstone.inventory.GlowHorseInventory;
-
 import org.bukkit.Location;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.inventory.HorseInventory;
+
+import java.util.UUID;
 
 public class GlowHorse extends GlowTameable implements Horse {
 
@@ -131,6 +130,9 @@ public class GlowHorse extends GlowTameable implements Horse {
         return inventory;
     }
 
+    public void setInventory(HorseInventory inventory) {
+        this.inventory = inventory;
+    }
 
     public boolean isEatingHay() {
         return eatingHay;
@@ -162,9 +164,5 @@ public class GlowHorse extends GlowTameable implements Horse {
 
     public void setOwnerUUID(UUID ownerUUID) {
         this.ownerUUID = ownerUUID;
-    }
-
-    public void setInventory(HorseInventory inventory) {
-        this.inventory = inventory;
     }
 }

@@ -1,9 +1,42 @@
 package net.glowstone.entity.meta;
 
-import org.bukkit.entity.*;
-import org.bukkit.entity.minecart.PoweredMinecart;
+import static net.glowstone.entity.meta.MetadataType.BYTE;
+import static net.glowstone.entity.meta.MetadataType.FLOAT;
+import static net.glowstone.entity.meta.MetadataType.INT;
+import static net.glowstone.entity.meta.MetadataType.ITEM;
+import static net.glowstone.entity.meta.MetadataType.SHORT;
+import static net.glowstone.entity.meta.MetadataType.STRING;
 
-import static net.glowstone.entity.meta.MetadataType.*;
+import org.bukkit.entity.Ageable;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Bat;
+import org.bukkit.entity.Blaze;
+import org.bukkit.entity.Boat;
+import org.bukkit.entity.Creeper;
+import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.Enderman;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Firework;
+import org.bukkit.entity.Ghast;
+import org.bukkit.entity.Horse;
+import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.IronGolem;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Minecart;
+import org.bukkit.entity.Ocelot;
+import org.bukkit.entity.Pig;
+import org.bukkit.entity.Sheep;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Slime;
+import org.bukkit.entity.Spider;
+import org.bukkit.entity.Villager;
+import org.bukkit.entity.Witch;
+import org.bukkit.entity.Wither;
+import org.bukkit.entity.Wolf;
+import org.bukkit.entity.Zombie;
+import org.bukkit.entity.minecart.PoweredMinecart;
 
 /**
  * Index constants for entity metadata.
@@ -114,6 +147,17 @@ public enum MetadataIndex {
         this.appliesTo = appliesTo;
     }
 
+    public static MetadataIndex getIndex(int index, MetadataType type) {
+        MetadataIndex output = null;
+        for (MetadataIndex entry : values()) {
+            if (entry.getIndex() == index && entry.getType().equals(type)) {
+                output = entry;
+                break;
+            }
+        }
+        return output;
+    }
+
     public int getIndex() {
         return index;
     }
@@ -130,18 +174,8 @@ public enum MetadataIndex {
         return appliesTo.isAssignableFrom(clazz);
     }
 
-    public static MetadataIndex getIndex(int index, MetadataType type) {
-        MetadataIndex output = null;
-        for (MetadataIndex entry : values()) {
-            if (entry.getIndex() == index && entry.getType().equals(type)) {
-                output = entry;
-                break;
-            }
-        }
-        return output;
-    }
-
     public static interface StatusFlags {
+
         final int ON_FIRE = 0x01;
         final int SNEAKING = 0x02;
         final int SPRINTING = 0x08;
@@ -150,6 +184,7 @@ public enum MetadataIndex {
     }
 
     public static interface HorseFlags {
+
         final int IS_TAME = 0x02;
         final int HAS_SADDLE = 0x04;
         final int HAS_CHEST = 0x08;
@@ -160,6 +195,7 @@ public enum MetadataIndex {
     }
 
     public static interface TameableFlags {
+
         final int IS_SITTING = 0x01;
         final int WOLF_IS_ANGRY = 0x02;
         final int IS_TAME = 0x04;

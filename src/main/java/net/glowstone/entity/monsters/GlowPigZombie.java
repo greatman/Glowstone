@@ -10,7 +10,7 @@ public class GlowPigZombie extends GlowZombie implements PigZombie {
     private boolean isAngry = false;
 
     public GlowPigZombie(Location location) {
-        super(location, EntityType.ZOMBIE);
+        super(location, EntityType.PIG_ZOMBIE);
     }
 
     @Override
@@ -23,14 +23,14 @@ public class GlowPigZombie extends GlowZombie implements PigZombie {
         anger = i;
     }
 
+    @Override
+    public boolean isAngry() {
+        return isAngry;
+    }
+
     // TODO consider this to be incomplete
     @Override
     public void setAngry(boolean b) {
         isAngry = b;
-    }
-
-    @Override
-    public boolean isAngry() {
-        return isAngry;
     }
 }

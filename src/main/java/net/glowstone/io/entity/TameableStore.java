@@ -1,26 +1,23 @@
 package net.glowstone.io.entity;
 
-import java.util.UUID;
-
 import net.glowstone.entity.passive.GlowTameable;
 import net.glowstone.util.nbt.CompoundTag;
-
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
-public abstract class TameableStore<T extends GlowTameable> extends AgeableStore<T>
-{
-    public TameableStore(Class<T> clazz, String id)
-    {
+import java.util.UUID;
+
+public abstract class TameableStore<T extends GlowTameable> extends AgeableStore<T> {
+
+    public TameableStore(Class<T> clazz, String id) {
         super(clazz, id);
     }
 
     @Override
-    public void load(T entity, CompoundTag compound)
-    {
+    public void load(T entity, CompoundTag compound) {
         // TODO make this better.
         super.load(entity, compound);
-        if (compound.containsKey("OwnerUUID")) {
+        if (compound.containsKey("OwnerUUID") && !compound.getString("OwnerUUID").isEmpty()) {
             entity.setOwnerUUID(UUID.fromString(compound.getString("OwnerUUID")));
             if (Bukkit.getPlayer(entity.getOwnerUUID()) != null) {
                 entity.setOwner(Bukkit.getPlayer(entity.getOwnerUUID()));
@@ -38,14 +35,11 @@ public abstract class TameableStore<T extends GlowTameable> extends AgeableStore
     }
 
     @Override
-    public void save(T entity, CompoundTag tag)
-    {
+    public void save(T entity, CompoundTag tag) {
         super.save(entity, tag);
-        if (entity.getOwner() == null)
-        {
+        if (entity.getOwner() == null) {
             tag.putString("OwnerUUID", "");
-        } else
-        {
+        } else {
             tag.putString("OwnerUUID", entity.getOwner().getUniqueId().toString());
         }
     }

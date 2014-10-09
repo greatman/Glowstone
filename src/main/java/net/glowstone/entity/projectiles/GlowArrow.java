@@ -1,7 +1,6 @@
 package net.glowstone.entity.projectiles;
 
 import net.glowstone.entity.GlowProjectile;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;

@@ -1,11 +1,8 @@
 package net.glowstone.entity.passive;
 
 import net.glowstone.entity.GlowAgeable;
-
 import org.bukkit.Location;
-import org.bukkit.entity.Ageable;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.NPC;
 import org.bukkit.entity.Villager;
 
 /**

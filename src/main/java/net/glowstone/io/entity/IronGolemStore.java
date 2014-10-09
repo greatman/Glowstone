@@ -1,9 +1,7 @@
 package net.glowstone.io.entity;
 
-import net.glowstone.entity.monsters.GlowZombie;
 import net.glowstone.entity.passive.GlowIronGolem;
 import net.glowstone.util.nbt.CompoundTag;
-
 import org.bukkit.Location;
 
 class IronGolemStore extends CreatureStore<GlowIronGolem> {

@@ -23,9 +23,9 @@ public class BlockPumpkin extends BlockType {
     @Override
     public void afterPlace(GlowPlayer player, GlowBlock block, ItemStack holding) {
         super.afterPlace(player, block, holding);
-        if (block.getLocation().add(0,-1,0).getBlock().getType().equals(Material.SNOW_BLOCK)) {
-            if (block.getLocation().add(0,-2,0).getBlock().getType().equals(Material.SNOW_BLOCK)) {
-                Location snowmanLocation = block.getLocation().add(0,-2,0);
+        if (block.getLocation().add(0, -1, 0).getBlock().getType().equals(Material.SNOW_BLOCK)) {
+            if (block.getLocation().add(0, -2, 0).getBlock().getType().equals(Material.SNOW_BLOCK)) {
+                Location snowmanLocation = block.getLocation().add(0, -2, 0);
 
             }
         }

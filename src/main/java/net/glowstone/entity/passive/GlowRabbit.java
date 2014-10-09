@@ -1,10 +1,9 @@
 package net.glowstone.entity.passive;
 
 import net.glowstone.entity.GlowAnimal;
-
 import org.bukkit.Location;
-import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Rabbit;
 
 public class GlowRabbit extends GlowAnimal implements Rabbit {
 
@@ -19,15 +18,13 @@ public class GlowRabbit extends GlowAnimal implements Rabbit {
     }
 
     @Override
-    public RabbitType getRabbitType()
-    {
+    public RabbitType getRabbitType() {
         // TODO Implement
         return null;
     }
 
     @Override
-    public void setRabbitType(RabbitType type)
-    {
+    public void setRabbitType(RabbitType type) {
         // TODO Implement
 
     }

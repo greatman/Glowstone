@@ -1,31 +1,24 @@
 package net.glowstone.io.entity;
 
-import net.glowstone.entity.monsters.GlowEndermite;
 import net.glowstone.entity.monsters.GlowGuardian;
 import net.glowstone.util.nbt.CompoundTag;
 
-import org.bukkit.Location;
-
-public class GuardianStore extends MonsterStore<GlowGuardian>
-{
+public class GuardianStore extends MonsterStore<GlowGuardian> {
 
     public static final String ELDER_TAG = "Elder";
 
-    public GuardianStore()
-    {
+    public GuardianStore() {
         super(GlowGuardian.class, "Guardian");
     }
 
     @Override
-    public void load(GlowGuardian entity, CompoundTag compound)
-    {
+    public void load(GlowGuardian entity, CompoundTag compound) {
         super.load(entity, compound);
         entity.setElder(compound.getBool(ELDER_TAG));
     }
 
     @Override
-    public void save(GlowGuardian entity, CompoundTag tag)
-    {
+    public void save(GlowGuardian entity, CompoundTag tag) {
         super.save(entity, tag);
         tag.putBool(ELDER_TAG, entity.isElder());
     }

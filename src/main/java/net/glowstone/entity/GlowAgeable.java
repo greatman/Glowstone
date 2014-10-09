@@ -1,18 +1,8 @@
 package net.glowstone.entity;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import com.flowpowered.networking.Message;
-import net.glowstone.net.message.play.entity.EntityHeadRotationMessage;
-import net.glowstone.net.message.play.entity.SpawnMobMessage;
-import net.glowstone.util.Position;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Ageable;
-import org.bukkit.entity.Creature;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 
 /**
  * Represents a monster such as a creeper.
@@ -64,13 +54,13 @@ public class GlowAgeable extends GlowCreature implements Ageable {
     }
 
     @Override
-    public final void setAgeLock(boolean ageLocked) {
-        this.ageLocked = ageLocked;
+    public final boolean getAgeLock() {
+        return this.ageLocked;
     }
 
     @Override
-    public final boolean getAgeLock() {
-        return this.ageLocked;
+    public final void setAgeLock(boolean ageLocked) {
+        this.ageLocked = ageLocked;
     }
 
     @Override

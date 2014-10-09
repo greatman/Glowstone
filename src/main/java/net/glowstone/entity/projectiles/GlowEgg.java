@@ -1,11 +1,9 @@
 package net.glowstone.entity.projectiles;
 
 import net.glowstone.entity.GlowProjectile;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Egg;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Snowball;
 import org.bukkit.projectiles.ProjectileSource;
 
 public class GlowEgg extends GlowProjectile implements Egg {

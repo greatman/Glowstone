@@ -1,14 +1,13 @@
 package net.glowstone.entity;
 
-import java.util.List;
-
 import com.flowpowered.networking.Message;
-
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.projectiles.ProjectileSource;
+
+import java.util.List;
 
 public class GlowProjectile extends GlowEntity implements Projectile {
 
@@ -49,13 +48,13 @@ public class GlowProjectile extends GlowEntity implements Projectile {
     }
 
     @Override
-    public void _INVALID_setShooter(LivingEntity entity) {
-        this.shooter = entity;
+    public void setShooter(ProjectileSource projectileSource) {
+        this.shooter = projectileSource;
     }
 
     @Override
-    public void setShooter(ProjectileSource projectileSource) {
-        this.shooter = projectileSource;
+    public void _INVALID_setShooter(LivingEntity entity) {
+        this.shooter = entity;
     }
 
     @Override

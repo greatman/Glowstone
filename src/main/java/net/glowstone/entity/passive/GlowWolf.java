@@ -18,21 +18,19 @@ public class GlowWolf extends GlowTameable implements Wolf {
      * Creates a new tamed animal.
      *
      * @param location The location of the animal
-     * @param type     The type of animal
      */
-    public GlowWolf(Location location, EntityType type) {
-        super(location, type);
+    public GlowWolf(Location location) {
+        super(location, EntityType.WOLF);
     }
 
     /**
      * Creates a new tamed animal.
      *
      * @param location The location of the animal
-     * @param type     The type of animal
      * @param owner    The owner of the animal
      */
-    protected GlowWolf(Location location, EntityType type, AnimalTamer owner) {
-        super(location, type, owner);
+    protected GlowWolf(Location location, AnimalTamer owner) {
+        super(location, EntityType.WOLF, owner);
     }
 
     @Override

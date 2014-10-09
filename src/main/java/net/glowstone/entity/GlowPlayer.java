@@ -3,7 +3,11 @@ package net.glowstone.entity;
 import com.flowpowered.networking.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import net.glowstone.*;
+import net.glowstone.ChunkManager;
+import net.glowstone.EventFactory;
+import net.glowstone.GlowChunk;
+import net.glowstone.GlowOfflinePlayer;
+import net.glowstone.GlowWorld;
 import net.glowstone.block.entity.TileEntity;
 import net.glowstone.constants.GlowAchievement;
 import net.glowstone.constants.GlowEffect;
@@ -20,21 +24,68 @@ import net.glowstone.net.message.login.LoginSuccessMessage;
 import net.glowstone.net.message.play.entity.DestroyEntitiesMessage;
 import net.glowstone.net.message.play.entity.EntityMetadataMessage;
 import net.glowstone.net.message.play.entity.EntityVelocityMessage;
-import net.glowstone.net.message.play.game.*;
-import net.glowstone.net.message.play.inv.*;
+import net.glowstone.net.message.play.game.BlockActionMessage;
+import net.glowstone.net.message.play.game.BlockChangeMessage;
+import net.glowstone.net.message.play.game.ChatMessage;
+import net.glowstone.net.message.play.game.ChunkBulkMessage;
+import net.glowstone.net.message.play.game.ChunkDataMessage;
+import net.glowstone.net.message.play.game.ExperienceMessage;
+import net.glowstone.net.message.play.game.HealthMessage;
+import net.glowstone.net.message.play.game.JoinGameMessage;
+import net.glowstone.net.message.play.game.MultiBlockChangeMessage;
+import net.glowstone.net.message.play.game.PlayEffectMessage;
+import net.glowstone.net.message.play.game.PlayParticleMessage;
+import net.glowstone.net.message.play.game.PlaySoundMessage;
+import net.glowstone.net.message.play.game.PluginMessage;
+import net.glowstone.net.message.play.game.PositionRotationMessage;
+import net.glowstone.net.message.play.game.RespawnMessage;
+import net.glowstone.net.message.play.game.SignEditorMessage;
+import net.glowstone.net.message.play.game.SpawnPositionMessage;
+import net.glowstone.net.message.play.game.StateChangeMessage;
+import net.glowstone.net.message.play.game.StatisticMessage;
+import net.glowstone.net.message.play.game.TimeMessage;
+import net.glowstone.net.message.play.game.UpdateSignMessage;
+import net.glowstone.net.message.play.game.UserListItemMessage;
+import net.glowstone.net.message.play.inv.CloseWindowMessage;
+import net.glowstone.net.message.play.inv.OpenWindowMessage;
+import net.glowstone.net.message.play.inv.SetWindowContentsMessage;
+import net.glowstone.net.message.play.inv.SetWindowSlotMessage;
+import net.glowstone.net.message.play.inv.WindowPropertyMessage;
 import net.glowstone.net.message.play.player.PlayerAbilitiesMessage;
 import net.glowstone.net.protocol.ProtocolType;
 import net.glowstone.util.StatisticMap;
 import net.glowstone.util.TextMessage;
 import org.apache.commons.lang.Validate;
-import org.bukkit.*;
+import org.bukkit.Achievement;
+import org.bukkit.BanList;
+import org.bukkit.ChatColor;
+import org.bukkit.Effect;
+import org.bukkit.GameMode;
+import org.bukkit.Instrument;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Note;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.Statistic;
+import org.bukkit.WeatherType;
+import org.bukkit.World;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationAbandonedEvent;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerRegisterChannelEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.PlayerToggleSprintEvent;
+import org.bukkit.event.player.PlayerUnregisterChannelEvent;
+import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -48,7 +99,16 @@ import org.bukkit.util.Vector;
 
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 
 /**
@@ -274,7 +334,8 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
         if (server.isHardcore()) {
             gameMode |= 0x8;
         }
-        session.send(new JoinGameMessage(SELF_ID, gameMode, world.getEnvironment().getId(), world.getDifficulty().getValue(), session.getServer().getMaxPlayers(), type, false));
+        session.send(new JoinGameMessage(SELF_ID, gameMode, world.getEnvironment().getId(), world.getDifficulty().getValue(),
+                                         session.getServer().getMaxPlayers(), type, false));
         setAllowFlight(getGameMode() == GameMode.CREATIVE);
 
         // send server brand and supported plugin channels
@@ -415,8 +476,9 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
 
         // add entities
         for (GlowEntity entity : world.getEntityManager()) {
-            if (entity == this)
+            if (entity == this) {
                 continue;
+            }
             boolean withinDistance = !entity.isDead() && isWithinDistance(entity);
 
             if (withinDistance && !knownEntities.contains(entity) && !hiddenEntities.contains(entity.getUniqueId())) {
@@ -693,20 +755,20 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
     }
 
     /**
+     * Get this player's client settings.
+     * @return The player's client settings.
+     */
+    public ClientSettings getSettings() {
+        return settings;
+    }
+
+    /**
      * Set the client settings for this player.
      * @param settings The new client settings.
      */
     public void setSettings(ClientSettings settings) {
         this.settings = settings;
         metadata.set(MetadataIndex.PLAYER_SKIN_FLAGS, settings.getSkinFlags());
-    }
-
-    /**
-     * Get this player's client settings.
-     * @return The player's client settings.
-     */
-    public ClientSettings getSettings() {
-        return settings;
     }
 
     @Override
@@ -873,7 +935,9 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
     public void setGameMode(GameMode mode) {
         boolean changed = getGameMode() != mode;
         super.setGameMode(mode);
-        if (changed) session.send(new StateChangeMessage(3, mode.getValue()));
+        if (changed) {
+            session.send(new StateChangeMessage(3, mode.getValue()));
+        }
 
         setAllowFlight(mode == GameMode.CREATIVE);
     }
@@ -935,7 +999,9 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
     @Override
     public void setAllowFlight(boolean flight) {
         canFly = flight;
-        if (!canFly) flying = false;
+        if (!canFly) {
+            flying = false;
+        }
         sendAbilities();
     }
 
@@ -1303,7 +1369,9 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
 
     @Override
     public void playSound(Location location, String sound, float volume, float pitch) {
-        if (location == null || sound == null) return;
+        if (location == null || sound == null) {
+            return;
+        }
         // the loss of precision here is a bit unfortunate but it's what CraftBukkit does
         double x = location.getBlockX() + 0.5;
         double y = location.getBlockY() + 0.5;
@@ -1317,8 +1385,11 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
     }
 
     @Override
-    public void showParticle(Location loc, Particle particle, MaterialData material, float offsetX, float offsetY, float offsetZ, float speed, int amount) {
-        if (location == null || particle == null) return;
+    public void showParticle(Location loc, Particle particle, MaterialData material, float offsetX, float offsetY, float offsetZ, float speed,
+                             int amount) {
+        if (location == null || particle == null) {
+            return;
+        }
 
         int id = GlowParticle.getId(particle);
         boolean longDistance = GlowParticle.isLongDistance(particle);
@@ -1376,7 +1447,9 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
 
     @Override
     public void awardAchievement(Achievement achievement) {
-        if (hasAchievement(achievement)) return;
+        if (hasAchievement(achievement)) {
+            return;
+        }
 
         stats.setAchievement(achievement, true);
         sendAchievement(achievement, true);
@@ -1386,7 +1459,9 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
 
     @Override
     public void removeAchievement(Achievement achievement) {
-        if (!hasAchievement(achievement)) return;
+        if (!hasAchievement(achievement)) {
+            return;
+        }
 
         stats.setAchievement(achievement, false);
         sendAchievement(achievement, false);
@@ -1512,7 +1587,9 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
 
     @Override
     public boolean setWindowProperty(InventoryView.Property prop, int value) {
-        if (!super.setWindowProperty(prop, value)) return false;
+        if (!super.setWindowProperty(prop, value)) {
+            return false;
+        }
         session.send(new WindowPropertyMessage(invMonitor.getId(), prop.getId(), value));
         return true;
     }
@@ -1583,14 +1660,14 @@ public final class GlowPlayer extends GlowHumanEntity implements Player {
     }
 
     @Override
-    public void setPlayerWeather(WeatherType type) {
-        playerWeather = type;
-        sendWeather();
+    public WeatherType getPlayerWeather() {
+        return playerWeather;
     }
 
     @Override
-    public WeatherType getPlayerWeather() {
-        return playerWeather;
+    public void setPlayerWeather(WeatherType type) {
+        playerWeather = type;
+        sendWeather();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package net.glowstone.entity.projectiles;
 
 import net.glowstone.entity.GlowProjectile;
-
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
@@ -20,23 +19,23 @@ public abstract class GlowFireball extends GlowProjectile implements Fireball {
     }
 
     @Override
-    public void setDirection(Vector vector) {
-
-    }
-
-    @Override
     public Vector getDirection() {
         return null;
     }
 
     @Override
-    public void setYield(float v) {
-        yield = v;
+    public void setDirection(Vector vector) {
+
     }
 
     @Override
     public float getYield() {
         return yield;
+    }
+
+    @Override
+    public void setYield(float v) {
+        yield = v;
     }
 
     @Override

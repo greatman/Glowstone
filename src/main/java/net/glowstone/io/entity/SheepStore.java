@@ -2,7 +2,6 @@ package net.glowstone.io.entity;
 
 import net.glowstone.entity.passive.GlowSheep;
 import net.glowstone.util.nbt.CompoundTag;
-
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 

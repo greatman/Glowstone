@@ -1,4 +1,4 @@
-package net.glowstone.entity.animals;
+package net.glowstone.entity.passive;
 
 import net.glowstone.entity.GlowAnimal;
 

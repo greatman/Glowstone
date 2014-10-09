@@ -1,13 +1,20 @@
 package net.glowstone.io.entity;
 
 import net.glowstone.GlowWorld;
-import net.glowstone.entity.GlowAgeable;
-import net.glowstone.entity.animals.GlowChicken;
-import net.glowstone.entity.animals.GlowCow;
+import net.glowstone.entity.GlowMonster;
+import net.glowstone.entity.monsters.GlowBlaze;
+import net.glowstone.entity.monsters.GlowCaveSpider;
+import net.glowstone.entity.monsters.GlowGiant;
+import net.glowstone.entity.monsters.GlowMagmaCube;
+import net.glowstone.entity.monsters.GlowSilverfish;
+import net.glowstone.entity.monsters.GlowSlime;
+import net.glowstone.entity.monsters.GlowSpider;
+import net.glowstone.entity.monsters.GlowWitch;
+import net.glowstone.entity.monsters.GlowZombie;
+import net.glowstone.entity.passive.GlowChicken;
+import net.glowstone.entity.passive.GlowCow;
 import net.glowstone.entity.GlowEntity;
-import net.glowstone.entity.animals.GlowMushroomCow;
-import net.glowstone.entity.animals.GlowOcelot;
-import net.glowstone.entity.animals.GlowPig;
+import net.glowstone.entity.passive.GlowMushroomCow;
 import net.glowstone.io.nbt.NbtSerialization;
 import net.glowstone.util.nbt.CompoundTag;
 import org.bukkit.Location;
@@ -41,15 +48,51 @@ public final class EntityStorage {
      * Populates the maps with stores.
      */
     static {
+
+        // LivingEntities - General
         bind(new PlayerStore());
-        bind(new ItemStore());
+
+        // LivingEntities - Passive Entities
+        bind(new BatStore());
         bind(new AgeableStore<>(GlowChicken.class, "Chicken"));
         bind(new AgeableStore<>(GlowCow.class, "Cow"));
         bind(new HorseStore());
+        bind(new IronGolemStore());
         bind(new AgeableStore<>(GlowMushroomCow.class, "MushroomCow"));
+        bind(new OcelotStore());
         bind(new PigStore());
+        bind(new RabbitStore());
         bind(new SheepStore());
-        bind(new ZombieStore());
+        bind(new SnowmanStore());
+        bind(new SquidStore());
+        bind(new VillagerStore());
+        bind(new WolfStore());
+
+        // LivingEntities - Monsters
+        bind(new MonsterStore<>(GlowBlaze.class, "Blaze"));
+        bind(new MonsterStore<>(GlowCaveSpider.class, "CaveSpider"));
+        bind(new CreeperStore());
+        bind(new EndermanStore());
+        bind(new EndermiteStorage());
+        bind(new GhastStore());
+        bind(new GuardianStore());
+        bind(new MonsterStore<>(GlowGiant.class, "Giant"));
+        bind(new SlimeStore<>(GlowMagmaCube.class, "MagmaCube"));
+        bind(new PigZombieStore());
+        bind(new MonsterStore<>(GlowSilverfish.class, "Silverfish"));
+        bind(new SkeletonStore());
+        bind(new SlimeStore<>(GlowSlime.class, "Slime"));
+        bind(new MonsterStore<>(GlowSpider.class, "Spider"));
+        bind(new MonsterStore<>(GlowWitch.class, "Witch"));
+        bind(new WitherStore());
+        bind(new ZombieStore<>(GlowZombie.class, "Zombie"));
+        // Projectiles
+
+        // Minecarts
+
+
+        // Various
+        bind(new ItemStore());
         bind(new PaintingStore());
     }
 

@@ -8,19 +8,21 @@ import org.bukkit.entity.Guardian;
 
 public class GlowGuardian extends GlowMonster implements Guardian {
 
-    private GuardianType guardianType = GuardianType.NORMAL;
+    private boolean isElder = false;
 
     public GlowGuardian(Location location) {
         super(location, EntityType.GUARDIAN);
     }
 
     @Override
-    public GuardianType getGuardianType() {
-        return guardianType;
+    public boolean isElder()
+    {
+        return this.isElder;
     }
 
     @Override
-    public void setGuardianType(GuardianType type) {
-        this.guardianType = type;
+    public void setElder(boolean isElder)
+    {
+        this.isElder = isElder;
     }
 }

@@ -1,4 +1,4 @@
-package net.glowstone.entity;
+package net.glowstone.entity.monsters;
 
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;

@@ -1,4 +1,4 @@
-package net.glowstone.entity.animals;
+package net.glowstone.entity.passive;
 
 import net.glowstone.entity.GlowAnimal;
 
@@ -16,5 +16,19 @@ public class GlowRabbit extends GlowAnimal implements Rabbit {
     public GlowRabbit(Location location) {
         super(location, EntityType.RABBIT);
         setSize(0.3F, 0.7F);
+    }
+
+    @Override
+    public RabbitType getRabbitType()
+    {
+        // TODO Implement
+        return null;
+    }
+
+    @Override
+    public void setRabbitType(RabbitType type)
+    {
+        // TODO Implement
+
     }
 }

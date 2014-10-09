@@ -1,6 +1,8 @@
-package net.glowstone.entity;
+package net.glowstone.entity.monsters;
 
 import java.util.List;
+
+import net.glowstone.entity.GlowLivingEntity;
 
 import com.flowpowered.networking.Message;
 

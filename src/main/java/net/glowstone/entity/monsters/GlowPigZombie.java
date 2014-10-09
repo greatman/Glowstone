@@ -23,6 +23,7 @@ public class GlowPigZombie extends GlowZombie implements PigZombie {
         anger = i;
     }
 
+    // TODO consider this to be incomplete
     @Override
     public void setAngry(boolean b) {
         isAngry = b;

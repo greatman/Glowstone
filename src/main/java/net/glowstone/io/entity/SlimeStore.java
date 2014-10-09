@@ -2,15 +2,17 @@ package net.glowstone.io.entity;
 
 import java.lang.reflect.Constructor;
 
-import net.glowstone.entity.GlowMonster;
+import net.glowstone.entity.monsters.GlowSlime;
 import net.glowstone.util.nbt.CompoundTag;
 
 import org.bukkit.Location;
 
-class MonsterStore<T extends GlowMonster> extends CreatureStore<T> {
+public class SlimeStore<T extends GlowSlime> extends LivingEntityStore<T>
+{
     private final Constructor<T> constructor;
 
-    public MonsterStore(Class<T> clazz, String id) {
+    public SlimeStore(Class<T> clazz, String id)
+    {
         super(clazz, id);
         Constructor<T> ctor = null;
         try
@@ -20,6 +22,21 @@ class MonsterStore<T extends GlowMonster> extends CreatureStore<T> {
             e.printStackTrace();
         }
         this.constructor = ctor;
+
+    }
+
+    @Override
+    public void load(T entity, CompoundTag compound)
+    {
+        super.load(entity, compound);
+        entity.setSize(compound.getInt("Size") + 1);
+    }
+
+    @Override
+    public void save(T entity, CompoundTag tag)
+    {
+        super.save(entity, tag);
+        tag.putInt("Size", entity.getSize() - 1);
     }
 
     @Override
@@ -32,13 +49,5 @@ class MonsterStore<T extends GlowMonster> extends CreatureStore<T> {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public void load(T entity, CompoundTag compound) {
-        super.load(entity, compound);
-    }
-
-    public void save(T entity, CompoundTag tag) {
-        super.save(entity, tag);
     }
 }

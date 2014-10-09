@@ -1,6 +1,6 @@
 package net.glowstone.io.entity;
 
-import net.glowstone.entity.animals.GlowPig;
+import net.glowstone.entity.passive.GlowPig;
 import net.glowstone.util.nbt.CompoundTag;
 
 import org.bukkit.Location;

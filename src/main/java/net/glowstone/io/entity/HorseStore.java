@@ -2,7 +2,7 @@ package net.glowstone.io.entity;
 
 import java.util.UUID;
 
-import net.glowstone.entity.animals.GlowHorse;
+import net.glowstone.entity.passive.GlowHorse;
 import net.glowstone.io.nbt.NbtSerialization;
 import net.glowstone.util.nbt.CompoundTag;
 import net.glowstone.util.nbt.TagType;

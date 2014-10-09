@@ -1,22 +1,33 @@
 package net.glowstone.io.entity;
 
+import java.lang.reflect.Constructor;
+
 import net.glowstone.entity.monsters.GlowZombie;
 import net.glowstone.util.nbt.CompoundTag;
 
 import org.bukkit.Location;
 
-class ZombieStore extends CreatureStore<GlowZombie> {
+class ZombieStore<T extends GlowZombie> extends CreatureStore<T> {
 
     private static final String BREAK_DOORS_TAG = "CanBreakDoors";
     private static final String CONVERSION_TIME_TAG = "ConversionTime";
     private static final String VILLAGER_TAG = "IsVillager";
     private static final String BABY_TAG = "IsBaby";
+    private final Constructor<T> constructor;
 
-    public ZombieStore() {
-        super(GlowZombie.class, "Zombie");
+    public ZombieStore(Class<T> clazz, String id) {
+        super(clazz, id);
+        Constructor<T> ctor = null;
+        try
+        {
+            ctor = clazz.getConstructor(Location.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.constructor = ctor;
     }
 
-    public void load(GlowZombie entity, CompoundTag compound) {
+    public void load(T entity, CompoundTag compound) {
         super.load(entity, compound);
         entity.setBaby(compound.getBool(BABY_TAG));
         entity.setVillager(compound.getBool(VILLAGER_TAG));
@@ -24,7 +35,7 @@ class ZombieStore extends CreatureStore<GlowZombie> {
         entity.setCanBreakDoors(compound.getBool(BREAK_DOORS_TAG));
     }
 
-    public void save(GlowZombie entity, CompoundTag tag) {
+    public void save(T entity, CompoundTag tag) {
         super.save(entity, tag);
         tag.putBool(BABY_TAG, entity.isBaby());
         tag.putBool(VILLAGER_TAG, entity.isVillager());
@@ -34,7 +45,12 @@ class ZombieStore extends CreatureStore<GlowZombie> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public GlowZombie createEntity(Location location, CompoundTag compound) {
-        return new GlowZombie(location);
-    }
+    public T createEntity(Location location, CompoundTag compound) {
+        try {
+            return constructor.newInstance(location);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;    }
 }

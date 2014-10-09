@@ -1,4 +1,4 @@
-package net.glowstone.entity.animals;
+package net.glowstone.entity.passive;
 
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;

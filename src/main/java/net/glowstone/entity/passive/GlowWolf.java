@@ -1,15 +1,18 @@
-package net.glowstone.entity.animals;
+package net.glowstone.entity.passive;
 
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Ocelot;
+import org.bukkit.entity.Wolf;
 
-public class GlowOcelot extends GlowTameable implements Ocelot {
+public class GlowWolf extends GlowTameable implements Wolf {
+
+    private boolean isAngry = false;
 
     private boolean isSitting = false;
 
-    private Type ocelotType = Type.WILD_OCELOT;
+    private DyeColor collarColor = DyeColor.RED;
 
     /**
      * Creates a new tamed animal.
@@ -17,7 +20,7 @@ public class GlowOcelot extends GlowTameable implements Ocelot {
      * @param location The location of the animal
      * @param type     The type of animal
      */
-    public GlowOcelot(Location location, EntityType type) {
+    public GlowWolf(Location location, EntityType type) {
         super(location, type);
     }
 
@@ -28,18 +31,18 @@ public class GlowOcelot extends GlowTameable implements Ocelot {
      * @param type     The type of animal
      * @param owner    The owner of the animal
      */
-    protected GlowOcelot(Location location, EntityType type, AnimalTamer owner) {
+    protected GlowWolf(Location location, EntityType type, AnimalTamer owner) {
         super(location, type, owner);
     }
 
     @Override
-    public Type getCatType() {
-        return ocelotType;
+    public boolean isAngry() {
+        return isAngry;
     }
 
     @Override
-    public void setCatType(Type type) {
-        this.ocelotType = type;
+    public void setAngry(boolean angry) {
+        this.isAngry = angry;
     }
 
     @Override
@@ -52,4 +55,13 @@ public class GlowOcelot extends GlowTameable implements Ocelot {
         this.isSitting = sitting;
     }
 
+    @Override
+    public DyeColor getCollarColor() {
+        return collarColor;
+    }
+
+    @Override
+    public void setCollarColor(DyeColor dyeColor) {
+        this.collarColor = dyeColor;
+    }
 }

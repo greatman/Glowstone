@@ -1,18 +1,15 @@
-package net.glowstone.entity.animals;
+package net.glowstone.entity.passive;
 
-import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Wolf;
+import org.bukkit.entity.Ocelot;
 
-public class GlowWolf extends GlowTameable implements Wolf {
-
-    private boolean isAngry = false;
+public class GlowOcelot extends GlowTameable implements Ocelot {
 
     private boolean isSitting = false;
 
-    private DyeColor collarColor = DyeColor.RED;
+    private Type ocelotType = Type.WILD_OCELOT;
 
     /**
      * Creates a new tamed animal.
@@ -20,7 +17,7 @@ public class GlowWolf extends GlowTameable implements Wolf {
      * @param location The location of the animal
      * @param type     The type of animal
      */
-    public GlowWolf(Location location, EntityType type) {
+    public GlowOcelot(Location location, EntityType type) {
         super(location, type);
     }
 
@@ -31,18 +28,18 @@ public class GlowWolf extends GlowTameable implements Wolf {
      * @param type     The type of animal
      * @param owner    The owner of the animal
      */
-    protected GlowWolf(Location location, EntityType type, AnimalTamer owner) {
+    protected GlowOcelot(Location location, EntityType type, AnimalTamer owner) {
         super(location, type, owner);
     }
 
     @Override
-    public boolean isAngry() {
-        return isAngry;
+    public Type getCatType() {
+        return ocelotType;
     }
 
     @Override
-    public void setAngry(boolean angry) {
-        this.isAngry = angry;
+    public void setCatType(Type type) {
+        this.ocelotType = type;
     }
 
     @Override
@@ -55,13 +52,4 @@ public class GlowWolf extends GlowTameable implements Wolf {
         this.isSitting = sitting;
     }
 
-    @Override
-    public DyeColor getCollarColor() {
-        return collarColor;
-    }
-
-    @Override
-    public void setCollarColor(DyeColor dyeColor) {
-        this.collarColor = dyeColor;
-    }
 }

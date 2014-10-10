@@ -5,45 +5,10 @@ import net.glowstone.constants.GlowBiome;
 import net.glowstone.constants.GlowEffect;
 import net.glowstone.constants.GlowParticle;
 import net.glowstone.entity.*;
-import net.glowstone.entity.monsters.GlowCreeper;
-import net.glowstone.entity.monsters.GlowEndermite;
-import net.glowstone.entity.monsters.GlowGhast;
-import net.glowstone.entity.monsters.GlowGuardian;
-import net.glowstone.entity.monsters.GlowMagmaCube;
-import net.glowstone.entity.monsters.GlowSilverfish;
-import net.glowstone.entity.monsters.GlowSkeleton;
-import net.glowstone.entity.monsters.GlowSlime;
-import net.glowstone.entity.monsters.GlowSpider;
-import net.glowstone.entity.monsters.GlowWitch;
-import net.glowstone.entity.monsters.GlowWither;
-import net.glowstone.entity.monsters.GlowZombie;
-import net.glowstone.entity.passive.GlowBat;
-import net.glowstone.entity.passive.GlowChicken;
-import net.glowstone.entity.passive.GlowCow;
-import net.glowstone.entity.passive.GlowHorse;
-import net.glowstone.entity.passive.GlowIronGolem;
-import net.glowstone.entity.passive.GlowMushroomCow;
-import net.glowstone.entity.passive.GlowOcelot;
-import net.glowstone.entity.passive.GlowPig;
-import net.glowstone.entity.passive.GlowRabbit;
-import net.glowstone.entity.passive.GlowSheep;
-import net.glowstone.entity.monsters.GlowBlaze;
-import net.glowstone.entity.monsters.GlowCaveSpider;
-import net.glowstone.entity.monsters.GlowEnderman;
-import net.glowstone.entity.monsters.GlowGiant;
-import net.glowstone.entity.monsters.GlowPigZombie;
-import net.glowstone.entity.objects.GlowItem;
-import net.glowstone.entity.passive.GlowSnowman;
-import net.glowstone.entity.passive.GlowSquid;
-import net.glowstone.entity.passive.GlowVillager;
-import net.glowstone.entity.passive.GlowWolf;
-import net.glowstone.entity.projectiles.GlowArrow;
-import net.glowstone.entity.projectiles.GlowEgg;
-import net.glowstone.entity.objects.GlowPainting;
-import net.glowstone.entity.projectiles.GlowLargeFireball;
-import net.glowstone.entity.projectiles.GlowSmallFireball;
-import net.glowstone.entity.projectiles.GlowSnowball;
-import net.glowstone.entity.projectiles.GlowWitherSkull;
+import net.glowstone.entity.monsters.*;
+import net.glowstone.entity.passive.*;
+import net.glowstone.entity.objects.*;
+import net.glowstone.entity.projectiles.*;
 import net.glowstone.io.WorldMetadataService.WorldFinalValues;
 import net.glowstone.io.WorldStorageProvider;
 import net.glowstone.io.anvil.AnvilWorldStorageProvider;
@@ -103,6 +68,8 @@ public final class GlowWorld implements World {
      * The length in ticks between autosaves (5 minutes).
      */
     private static final int AUTOSAVE_TIME = 20 * 60 * 5;
+
+    private static final Map<Class<? extends Entity>, Class<? extends GlowEntity>> ENTITY_REGISTRY = new HashMap<>();
 
     /**
      * The server of this world.
@@ -253,6 +220,56 @@ public final class GlowWorld implements World {
      * Per-chunk spawn limits on various types of entities.
      */
     private int monsterLimit, animalLimit, waterAnimalLimit, ambientLimit;
+
+    static {
+        registerEntity(Blaze.class, GlowBlaze.class);
+        registerEntity(CaveSpider.class, GlowCaveSpider.class);
+        registerEntity(Creeper.class, GlowCreeper.class);
+        registerEntity(Enderman.class, GlowEnderman.class);
+        registerEntity(Endermite.class, GlowEndermite.class);
+        registerEntity(Ghast.class, GlowGhast.class);
+        registerEntity(Giant.class, GlowGiant.class);
+        registerEntity(Guardian.class, GlowGuardian.class);
+        registerEntity(MagmaCube.class, GlowMagmaCube.class);
+        registerEntity(PigZombie.class, GlowPigZombie.class);
+        registerEntity(Silverfish.class, GlowSilverfish.class);
+        registerEntity(Skeleton.class, GlowSkeleton.class);
+        registerEntity(Slime.class, GlowSlime.class);
+        registerEntity(Spider.class, GlowSpider.class);
+        registerEntity(Witch.class, GlowWitch.class);
+        registerEntity(Wither.class, GlowWither.class);
+        registerEntity(Zombie.class, GlowZombie.class);
+
+        registerEntity(Item.class, GlowItem.class);
+        registerEntity(Painting.class, GlowPainting.class);
+
+        registerEntity(Bat.class, GlowBat.class);
+        registerEntity(Chicken.class, GlowChicken.class);
+        registerEntity(Cow.class, GlowCow.class);
+        registerEntity(Horse.class, GlowHorse.class);
+        registerEntity(IronGolem.class, GlowIronGolem.class);
+        registerEntity(MushroomCow.class, GlowMushroomCow.class);
+        registerEntity(Ocelot.class, GlowOcelot.class);
+        registerEntity(Pig.class, GlowPig.class);
+        registerEntity(Rabbit.class, GlowRabbit.class);
+        registerEntity(Sheep.class, GlowSheep.class);
+        registerEntity(Snowman.class, GlowSnowman.class);
+        registerEntity(Squid.class, GlowSquid.class);
+        registerEntity(Villager.class, GlowVillager.class);
+        registerEntity(Wolf.class, GlowWolf.class);
+
+        registerEntity(Arrow.class, GlowArrow.class);
+        registerEntity(Egg.class, GlowEgg.class);
+        registerEntity(LargeFireball.class, GlowLargeFireball.class);
+        registerEntity(SmallFireball.class, GlowSmallFireball.class);
+        registerEntity(Snowball.class, GlowSnowball.class);
+        registerEntity(WitherSkull.class, GlowWitherSkull.class);
+
+    }
+
+    private static void registerEntity(Class<? extends Entity> apiClazz, Class<? extends GlowEntity> glowClazz) {
+        ENTITY_REGISTRY.put(apiClazz, glowClazz);
+    }
 
     /**
      * Creates a new world from the options in the given WorldCreator.
@@ -1135,165 +1152,11 @@ public final class GlowWorld implements World {
         }
         // order is important for some of these
         Entity entity = null;
-        if (Boat.class.isAssignableFrom(clazz)) {
-            // TODO Implement
-        } else if (FallingBlock.class.isAssignableFrom(clazz)) {
-            // TODO Implement
-        } else if (Projectile.class.isAssignableFrom(clazz)) {
-            if (Snowball.class.isAssignableFrom(clazz)) {
-                entity = new GlowSnowball(location);
-            } else if (Egg.class.isAssignableFrom(clazz)) {
-                entity = new GlowEgg(location);
-            } else if (Arrow.class.isAssignableFrom(clazz)) {
-                entity = new GlowArrow(location);
-                // TODO Make sure the projectile is at the correct velocity.
-            } else if (ThrownExpBottle.class.isAssignableFrom(clazz)) {
-                // TODO Implement
-            } else if (EnderPearl.class.isAssignableFrom(clazz)) {
-                // TODO Implement
-            } else if (ThrownPotion.class.isAssignableFrom(clazz)) {
-                // TODO Implement
-            } else if (Fireball.class.isAssignableFrom(clazz)) {
-                if (SmallFireball.class.isAssignableFrom(clazz)) {
-                    entity = new GlowSmallFireball(location);
-                } else if (WitherSkull.class.isAssignableFrom(clazz)) {
-                    entity = new GlowWitherSkull(location);
-                } else {
-                    entity = new GlowLargeFireball(location);
-                }
-            }
-        } else if (Minecart.class.isAssignableFrom(clazz)) {
-            if (org.bukkit.entity.minecart.PoweredMinecart.class.isAssignableFrom(clazz)) {
-                // TODO Implement entity = new GlowMinecartFurnace(location);
-            } else if (org.bukkit.entity.minecart.StorageMinecart.class.isAssignableFrom(clazz)) {
-                // TODO Implement entity = new GlowMinecartChest(location);
-            } else if (ExplosiveMinecart.class.isAssignableFrom(clazz)) {
-                // TODO Implement entity = new GlowMinecartTNT(location);
-            } else if (HopperMinecart.class.isAssignableFrom(clazz)) {
-                // TODO Implement entity = new GlowMinecartHopper(location);
-            } else if (SpawnerMinecart.class.isAssignableFrom(clazz)) {
-                // TODO Implement entity = new GlowMinecartMobSpawner(location);
-            } else { // Default to rideable minecart for pre-rideable compatibility
-                // TODO Implement entity = new GlowMinecartRideable(location);
-            }
-        } else if (EnderSignal.class.isAssignableFrom(clazz)) {
-            // TODO Implement entity = new GlowEnderSignal(location);
-        } else if (EnderCrystal.class.isAssignableFrom(clazz)) {
-            // TODO Implement entity = new GlowEnderCrystal(location);
-        } else if (LivingEntity.class.isAssignableFrom(clazz)) {
-            if (Chicken.class.isAssignableFrom(clazz)) {
-                entity = new GlowChicken(location);
-            } else if (Cow.class.isAssignableFrom(clazz)) {
-                if (MushroomCow.class.isAssignableFrom(clazz)) {
-                    entity = new GlowMushroomCow(location);
-                } else {
-                    entity = new GlowCow(location);
-                }
-            } else if (Golem.class.isAssignableFrom(clazz)) {
-                if (Snowman.class.isAssignableFrom(clazz)) {
-                    entity = new GlowSnowman(location);
-                } else if (IronGolem.class.isAssignableFrom(clazz)) {
-                    entity = new GlowIronGolem(location);
-                }
-            } else if (Creeper.class.isAssignableFrom(clazz)) {
-                entity = new GlowCreeper(location);
-            } else if (Ghast.class.isAssignableFrom(clazz)) {
-                entity = new GlowGhast(location);
-            } else if (Guardian.class.isAssignableFrom(clazz)) {
-                entity = new GlowGuardian(location);
-            } else if (Pig.class.isAssignableFrom(clazz)) {
-                entity = new GlowPig(location);
-            } else if (Player.class.isAssignableFrom(clazz)) {
-                // need a net server handler for this one
-            } else if (Sheep.class.isAssignableFrom(clazz)) {
-                entity = new GlowSheep(location);
-            } else if (Horse.class.isAssignableFrom(clazz)) {
-                entity = new GlowHorse(location);
-            } else if (Skeleton.class.isAssignableFrom(clazz)) {
-                entity = new GlowSkeleton(location);
-            } else if (Slime.class.isAssignableFrom(clazz)) {
-                if (MagmaCube.class.isAssignableFrom(clazz)) {
-                    entity = new GlowMagmaCube(location);
-                } else {
-                    entity = new GlowSlime(location);
-                }
-            } else if (Spider.class.isAssignableFrom(clazz)) {
-                if (CaveSpider.class.isAssignableFrom(clazz)) {
-                    entity = new GlowCaveSpider(location);
-                } else {
-                    entity = new GlowSpider(location);
-                }
-            } else if (Squid.class.isAssignableFrom(clazz)) {
-                entity = new GlowSquid(location);
-            } else if (Tameable.class.isAssignableFrom(clazz)) {
-                if (Wolf.class.isAssignableFrom(clazz)) {
-                    entity = new GlowWolf(location);
-                } else if (Ocelot.class.isAssignableFrom(clazz)) {
-                    entity = new GlowOcelot(location);
-                }
-            } else if (Rabbit.class.isAssignableFrom(clazz)) {
-                entity = new GlowRabbit(location);
-            } else if (Endermite.class.isAssignableFrom(clazz)) {
-                entity = new GlowEndermite(location);
-            } else if (PigZombie.class.isAssignableFrom(clazz)) {
-                entity = new GlowPigZombie(location);
-            } else if (Zombie.class.isAssignableFrom(clazz)) {
-                entity = new GlowZombie(location);
-            } else if (Giant.class.isAssignableFrom(clazz)) {
-                entity = new GlowGiant(location);
-            } else if (Silverfish.class.isAssignableFrom(clazz)) {
-                entity = new GlowSilverfish(location);
-            } else if (Enderman.class.isAssignableFrom(clazz)) {
-                entity = new GlowEnderman(location);
-            } else if (Blaze.class.isAssignableFrom(clazz)) {
-                entity = new GlowBlaze(location);
-            } else if (Villager.class.isAssignableFrom(clazz)) {
-                entity = new GlowVillager(location);
-            } else if (Witch.class.isAssignableFrom(clazz)) {
-                entity = new GlowWitch(location);
-            } else if (Wither.class.isAssignableFrom(clazz)) {
-                entity = new GlowWither(location);
-            } else if (ComplexLivingEntity.class.isAssignableFrom(clazz)) {
-                if (EnderDragon.class.isAssignableFrom(clazz)) {
-                    // TODO Implement  entity = new GlowEnderDragon(location);
-                }
-            } else if (Ambient.class.isAssignableFrom(clazz)) {
-                if (Bat.class.isAssignableFrom(clazz)) {
-                    entity = new GlowBat(location);
-                }
-            }
-        } else if (Hanging.class.isAssignableFrom(clazz)) {
-            Block block = getBlockAt(location);
-            BlockFace face = BlockFace.SELF;
-            if (block.getRelative(BlockFace.EAST).getTypeId() == 0) {
-                face = BlockFace.EAST;
-            } else if (block.getRelative(BlockFace.NORTH).getTypeId() == 0) {
-                face = BlockFace.NORTH;
-            } else if (block.getRelative(BlockFace.WEST).getTypeId() == 0) {
-                face = BlockFace.WEST;
-            } else if (block.getRelative(BlockFace.SOUTH).getTypeId() == 0) {
-                face = BlockFace.SOUTH;
-            }
-
-            if (Painting.class.isAssignableFrom(clazz)) {
-                entity = new GlowPainting(location, null, face);
-            } else if (ItemFrame.class.isAssignableFrom(clazz)) {
-                // TODO Implement entity = new GlowItemFrame(location);
-            } else if (LeashHitch.class.isAssignableFrom(clazz)) {
-                // TODO Implement entity = new GlowLeash(location);
-            }
-        } else if (TNTPrimed.class.isAssignableFrom(clazz)) {
-            // TODO Implement entity = new GlowTNTPrimed(location);
-        } else if (ExperienceOrb.class.isAssignableFrom(clazz)) {
-            // TODO Implement entity = new GlowExperienceOrb(location);
-        } else if (Weather.class.isAssignableFrom(clazz)) {
-            // not sure what this can do
-            if (LightningStrike.class.isAssignableFrom(clazz)) {
-                entity = new GlowLightningStrike(location, false);
-                // what is this, I don't even
-            }
-        } else if (Firework.class.isAssignableFrom(clazz)) {
-            // TODO Implement entity = new GlowFireworks(location);
+        Class<? extends GlowEntity> entityClass = ENTITY_REGISTRY.get(clazz);
+        try {
+            entity = entityClass.getConstructor(Location.class).newInstance(location);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         if (entity != null) {

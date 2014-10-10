@@ -1,7 +1,7 @@
 package net.glowstone.entity.objects;
 
 import com.flowpowered.networking.Message;
-import net.glowstone.entity.GlowEntity;
+import net.glowstone.entity.GlowHanging;
 import net.glowstone.net.message.play.entity.EntityMetadataMessage;
 import net.glowstone.net.message.play.entity.SpawnPaintingMessage;
 import org.bukkit.Art;
@@ -19,20 +19,16 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class GlowPainting extends GlowEntity implements Painting {
+public class GlowPainting extends GlowHanging implements Painting {
 
     Art motive;
 
-    BlockFace facingDirection;
+    public GlowPainting(Location location) {
+        this(location, Art.BURNINGSKULL);
+    }
 
-    public GlowPainting(Location location, Art art, BlockFace facingDirection) {
-        super(location);
-        if (facingDirection == BlockFace.NORTH || facingDirection == BlockFace.SOUTH || facingDirection == BlockFace.WEST
-            || facingDirection == BlockFace.EAST) {
-            this.facingDirection = facingDirection;
-        } else {
-            this.facingDirection = BlockFace.SOUTH;
-        }
+    public GlowPainting(Location location, Art art) {
+        super(location, EntityType.PAINTING);
         this.motive = art;
     }
 
@@ -212,11 +208,6 @@ public class GlowPainting extends GlowEntity implements Painting {
     }
 
     @Override
-    public EntityType getType() {
-        return EntityType.PAINTING;
-    }
-
-    @Override
     public Art getArt() {
         return motive;
     }
@@ -289,27 +280,15 @@ public class GlowPainting extends GlowEntity implements Painting {
 
     @Override
     public boolean setFacingDirection(BlockFace blockFace, boolean force) {
-        if (blockFace == BlockFace.NORTH || blockFace == BlockFace.SOUTH || blockFace == BlockFace.WEST || blockFace == BlockFace.EAST) {
-            this.facingDirection = blockFace;
-        } else {
-            this.facingDirection = BlockFace.SOUTH;
+        if (super.setFacingDirection(blockFace, force)) {
+            if (!force && !fitsOnWall(getWorld(), location, facingDirection, motive)) {
+                remove();
+                return false;
+            } else {
+                return true;
+            }
         }
-        if (!force && !fitsOnWall(getWorld(), location, facingDirection, motive)) {
-            remove();
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    @Override
-    public BlockFace getAttachedFace() {
-        return facingDirection.getOppositeFace();
-    }
-
-    @Override
-    public void setFacingDirection(BlockFace blockFace) {
-        setFacingDirection(blockFace, false);
+        return false;
     }
 
     @Override
@@ -320,10 +299,7 @@ public class GlowPainting extends GlowEntity implements Painting {
         }
     }
 
-    @Override
-    public BlockFace getFacing() {
-        return facingDirection;
-    }
+
 
     @Override
     public void remove() {

@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Ghast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GlowGhast extends GlowFlying implements Ghast {
@@ -16,6 +17,6 @@ public class GlowGhast extends GlowFlying implements Ghast {
 
     @Override
     public List<Message> createSpawnMessage() {
-        return null; // TODO Implement
+        return new ArrayList<>(); // TODO Implement
     }
 }

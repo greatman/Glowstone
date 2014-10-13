@@ -22,7 +22,7 @@ public abstract class TameableStore<T extends GlowTameable> extends AgeableStore
             if (Bukkit.getPlayer(entity.getOwnerUUID()) != null) {
                 entity.setOwner(Bukkit.getPlayer(entity.getOwnerUUID()));
             }
-        } else {
+        } else if (compound.containsKey("Owner") && !compound.getString("Owner").isEmpty()) {
             String playerName = compound.getString("Owner");
             OfflinePlayer player = Bukkit.getOfflinePlayer(playerName);
             if (player.hasPlayedBefore()) {

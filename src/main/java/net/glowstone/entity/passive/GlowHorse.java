@@ -92,6 +92,9 @@ public class GlowHorse extends GlowTameable implements Horse {
 
     @Override
     public void setCarryingChest(boolean b) {
+        if (b) {
+//            this.inventory.setSi
+        }
         this.hasChest = b;
     }
 

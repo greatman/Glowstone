@@ -7,6 +7,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.projectiles.ProjectileSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GlowProjectile extends GlowEntity implements Projectile {
@@ -30,7 +31,7 @@ public class GlowProjectile extends GlowEntity implements Projectile {
 
     @Override
     public List<Message> createSpawnMessage() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

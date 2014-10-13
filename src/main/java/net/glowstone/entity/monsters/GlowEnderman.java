@@ -16,7 +16,7 @@ public class GlowEnderman extends GlowMonster implements Enderman {
 
     @Override
     public MaterialData getCarriedMaterial() {
-        return carriedMaterial.clone();
+        return carriedMaterial != null ? this.carriedMaterial.clone() : null;
     }
 
     @Override

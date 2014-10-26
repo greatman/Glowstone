@@ -256,12 +256,13 @@ public final class GlowWorld implements World {
         registerEntity(Villager.class, GlowVillager.class);
         registerEntity(Wolf.class, GlowWolf.class);
 
-        registerEntity(Arrow.class, GlowArrow.class);
-        registerEntity(Egg.class, GlowEgg.class);
-        registerEntity(LargeFireball.class, GlowLargeFireball.class);
-        registerEntity(SmallFireball.class, GlowSmallFireball.class);
-        registerEntity(Snowball.class, GlowSnowball.class);
-        registerEntity(WitherSkull.class, GlowWitherSkull.class);
+        // TODO Implement storages for these projectiles.
+//        registerEntity(Arrow.class, GlowArrow.class);
+//        registerEntity(Egg.class, GlowEgg.class);
+//        registerEntity(LargeFireball.class, GlowLargeFireball.class);
+//        registerEntity(SmallFireball.class, GlowSmallFireball.class);
+//        registerEntity(Snowball.class, GlowSnowball.class);
+//        registerEntity(WitherSkull.class, GlowWitherSkull.class);
 
     }
 

@@ -14,6 +14,7 @@ import org.bukkit.entity.Slime;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class GlowSlime extends GlowLivingEntity implements Slime {
 
@@ -26,13 +27,14 @@ public class GlowSlime extends GlowLivingEntity implements Slime {
      * @param type The type of animal.
      */
     protected GlowSlime(Location location, EntityType type) {
-        super(location);
+        this(location);
         this.type = type;
     }
 
     public GlowSlime(Location location) {
         super(location);
         this.type = EntityType.SLIME;
+        this.size = new Random().nextInt(4);
     }
 
     @Override
@@ -51,11 +53,8 @@ public class GlowSlime extends GlowLivingEntity implements Slime {
         result.add(new EntityHeadRotationMessage(id, yaw));
 
         MetadataMap map = new MetadataMap(GlowSlime.class);
-        map.set(MetadataIndex.SLIME_SIZE, 40);
+        map.set(MetadataIndex.SLIME_SIZE, this.getSize());
         result.add(new EntityMetadataMessage(id, map.getEntryList()));
-        // TODO Slime byte size message.
-        // todo: equipment
-        //result.add(createEquipmentMessage());
         return result;
     }
 

@@ -50,15 +50,22 @@ class HorseStore extends AgeableStore<GlowHorse> {
         entity.setTemper(compound.getInt(TEMPER_Key));
         entity.setTamed(compound.getBool(TAME_KEY));
         if (compound.containsKey(OWNER_UUID_KEY)) {
-            entity.setOwnerUUID(UUID.fromString(compound.getString(OWNER_UUID_KEY)));
+            String uuidKey = compound.getString(OWNER_UUID_KEY);
+            if (uuidKey.isEmpty()) {
+                entity.setOwnerUUID(null);
+            } else {
+                entity.setOwnerUUID(UUID.fromString(uuidKey));
+            }
         }
         if (compound.containsKey(ARMOR_ITEM_KEY)) {
             entity.getInventory().setArmor(NbtSerialization.readItem(compound.getCompound(ARMOR_ITEM_KEY)));
         }
         if (compound.containsKey(SADDLE_ITEM_KEY)) {
             entity.getInventory().setSaddle(NbtSerialization.readItem(compound.getCompound(SADDLE_ITEM_KEY)));
-        } else if (compound.getBool(SADDLE_KEY)) {
-            entity.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+        } else if (compound.containsKey(SADDLE_KEY)) {
+            if (compound.getBool(SADDLE_KEY)) {
+                entity.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+            }
         }
         if (entity.isCarryingChest()) {
 //            NbtSerialization.readInventory(compound.getCompoundList(ITEMS_KEY), 0, 10); TODO actually implement this properly
@@ -87,6 +94,11 @@ class HorseStore extends AgeableStore<GlowHorse> {
         if (entity.isCarryingChest()) {
             tag.putList(ITEMS_KEY, TagType.COMPOUND,
                              NbtSerialization.writeInventory(entity.getInventory().getContents(), entity.getInventory().getContents().length));
+        }
+        if (entity.getOwnerUUID() == null) {
+            tag.putString(OWNER_UUID_KEY, "");
+        } else {
+            tag.putString(OWNER_UUID_KEY, entity.getOwnerUUID().toString());
         }
     }
 }

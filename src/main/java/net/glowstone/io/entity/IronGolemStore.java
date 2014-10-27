@@ -9,7 +9,7 @@ class IronGolemStore extends CreatureStore<GlowIronGolem> {
     private static final String PLAYER_CREATED_TAG = "PlayerCreated";
 
     public IronGolemStore() {
-        super(GlowIronGolem.class, "IronGolem");
+        super(GlowIronGolem.class, "VillagerGolem");
     }
 
     public void load(GlowIronGolem entity, CompoundTag compound) {

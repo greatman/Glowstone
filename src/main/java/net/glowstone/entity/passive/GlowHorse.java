@@ -191,7 +191,6 @@ public class GlowHorse extends GlowTameable implements Horse {
         List<Message> messages = super.createSpawnMessage();
         MetadataMap map = new MetadataMap(GlowHorse.class);
         map.set(MetadataIndex.HORSE_TYPE, (byte) this.getVariant().ordinal());
-        // todo Apply the rest of the metadata with bitmasks
         map.set(MetadataIndex.HORSE_FLAGS, getHorseFlags());
         map.set(MetadataIndex.HORSE_STYLE, getHorseStyleData());
         map.set(MetadataIndex.HORSE_ARMOR, getHorseArmorData());
@@ -202,19 +201,19 @@ public class GlowHorse extends GlowTameable implements Horse {
     private int getHorseFlags() {
         int value = 0;
         if (isTamed()) {
-            value &= 0x02;
+            value |= 0x02;
         }
         if (getInventory() != null && getInventory().getSaddle() != null) {
-            value &= 0x04;
+            value |= 0x04;
         }
         if (hasChest) {
-            value &= 0x08;
+            value |= 0x08;
         }
         if (hasReproduced) {
-            value &= 0x10;
+            value |= 0x10;
         }
         if (isEatingHay()) {
-            value &= 0x20;
+            value |= 0x20;
         }
         return value;
     }

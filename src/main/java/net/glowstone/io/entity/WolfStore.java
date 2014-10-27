@@ -11,7 +11,7 @@ class WolfStore extends TameableStore<GlowWolf> {
     private static final String SITTING_TAG = "Sitting";
 
     public WolfStore() {
-        super(GlowWolf.class, "Ocelot");
+        super(GlowWolf.class, "Wolf");
     }
 
     @Override

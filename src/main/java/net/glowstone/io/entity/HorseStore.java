@@ -58,8 +58,7 @@ class HorseStore extends AgeableStore<GlowHorse> {
             entity.getInventory().setSaddle(new ItemStack(Material.SADDLE));
         }
         if (entity.isCarryingChest()) {
-            compound.putList(ITEMS_KEY, TagType.COMPOUND,
-                             NbtSerialization.writeInventory(entity.getInventory().getContents(), entity.getInventory().getContents().length));
+//            NbtSerialization.readInventory(compound.getCompoundList(ITEMS_KEY), 0, 10); TODO actually implement this properly
         }
 
     }
@@ -71,6 +70,19 @@ class HorseStore extends AgeableStore<GlowHorse> {
         tag.putBool(HAS_REPRODUCED_KEY, entity.isHasReproduced());
         tag.putBool(BRED_KEY, true);
         tag.putInt(TYPE_KEY, entity.getStyle().ordinal());
+        tag.putInt(VARIANT_KEY, entity.getVariant().ordinal());
         tag.putBool(SADDLE_KEY, entity.getInventory().getSaddle() != null);
+        tag.putInt(TEMPER_Key, entity.getTemper());
+        tag.putBool(TAME_KEY, entity.isTamed());
+        if (entity.getInventory().getArmor() != null) {
+            tag.putCompound(ARMOR_ITEM_KEY, NbtSerialization.writeItem(entity.getInventory().getArmor(), -1));
+        }
+        if (entity.getInventory().getSaddle() != null) {
+            tag.putCompound(SADDLE_ITEM_KEY, NbtSerialization.writeItem(entity.getInventory().getSaddle(), -1));
+        }
+        if (entity.isCarryingChest()) {
+            tag.putList(ITEMS_KEY, TagType.COMPOUND,
+                             NbtSerialization.writeInventory(entity.getInventory().getContents(), entity.getInventory().getContents().length));
+        }
     }
 }

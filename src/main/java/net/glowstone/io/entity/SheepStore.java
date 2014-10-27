@@ -11,7 +11,7 @@ class SheepStore extends AgeableStore<GlowSheep> {
     public static final String COLOR_KEY = "Color";
 
     public SheepStore() {
-        super(GlowSheep.class, "Pig");
+        super(GlowSheep.class, "Sheep");
     }
 
     @Override

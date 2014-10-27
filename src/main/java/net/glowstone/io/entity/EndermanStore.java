@@ -8,7 +8,7 @@ import org.bukkit.material.MaterialData;
 public class EndermanStore extends MonsterStore<GlowEnderman> {
 
     public EndermanStore() {
-        super(GlowEnderman.class, "Creeper");
+        super(GlowEnderman.class, "Enderman");
     }
 
     @Override

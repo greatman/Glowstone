@@ -1,8 +1,14 @@
 package net.glowstone.entity;
 
+import com.flowpowered.networking.Message;
+import net.glowstone.entity.meta.MetadataIndex;
+import net.glowstone.entity.meta.MetadataMap;
+import net.glowstone.net.message.play.entity.EntityMetadataMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.EntityType;
+
+import java.util.List;
 
 /**
  * Represents a monster such as a creeper.
@@ -98,6 +104,15 @@ public class GlowAgeable extends GlowCreature implements Ageable {
 
     public void setScaleForAge(boolean isAdult) {
         setScale(isAdult ? 1.0F : 0.5F);
+    }
+
+    @Override
+    public List<Message> createSpawnMessage() {
+        List<Message> messages = super.createSpawnMessage();
+        MetadataMap map = new MetadataMap(GlowAgeable.class);
+        map.set(MetadataIndex.AGE, this.getAge());
+        messages.add(new EntityMetadataMessage(id, map.getEntryList()));
+        return messages;
     }
 
     protected final void setScale(float scale) {

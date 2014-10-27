@@ -1,9 +1,15 @@
 package net.glowstone.entity.passive;
 
+import com.flowpowered.networking.Message;
+import net.glowstone.entity.meta.MetadataIndex;
+import net.glowstone.entity.meta.MetadataMap;
+import net.glowstone.net.message.play.entity.EntityMetadataMessage;
 import org.bukkit.Location;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Ocelot;
+
+import java.util.List;
 
 public class GlowOcelot extends GlowTameable implements Ocelot {
 
@@ -50,4 +56,12 @@ public class GlowOcelot extends GlowTameable implements Ocelot {
         this.isSitting = sitting;
     }
 
+    @Override
+    public List<Message> createSpawnMessage() {
+        List<Message> messages = super.createSpawnMessage();
+        MetadataMap map = new MetadataMap(GlowOcelot.class);
+        map.set(MetadataIndex.OCELOT_TYPE, (byte) this.getCatType().ordinal());
+        messages.add(new EntityMetadataMessage(id, map.getEntryList()));
+        return messages;
+    }
 }

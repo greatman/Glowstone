@@ -5,6 +5,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
 
+import java.util.Random;
+
 /**
  * Represents a Villager
  */
@@ -18,6 +20,7 @@ public class GlowVillager extends GlowAgeable implements Villager {
      */
     public GlowVillager(Location location) {
         super(location, EntityType.VILLAGER);
+        this.profession = Profession.values()[new Random().nextInt(4)];
     }
 
     @Override

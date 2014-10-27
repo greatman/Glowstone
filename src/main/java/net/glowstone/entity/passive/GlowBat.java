@@ -2,7 +2,10 @@ package net.glowstone.entity.passive;
 
 import com.flowpowered.networking.Message;
 import net.glowstone.entity.GlowAmbient;
+import net.glowstone.entity.meta.MetadataIndex;
+import net.glowstone.entity.meta.MetadataMap;
 import net.glowstone.net.message.play.entity.EntityHeadRotationMessage;
+import net.glowstone.net.message.play.entity.EntityMetadataMessage;
 import net.glowstone.net.message.play.entity.SpawnMobMessage;
 import net.glowstone.util.Position;
 import org.bukkit.Location;
@@ -34,9 +37,9 @@ public class GlowBat extends GlowAmbient implements Bat {
 
         // head facing
         result.add(new EntityHeadRotationMessage(id, yaw));
-
-        // todo: equipment
-        //result.add(createEquipmentMessage());
+        MetadataMap map = new MetadataMap(GlowBat.class);
+        map.set(MetadataIndex.BAT_HANGING, (byte) (this.isAwake ? 1 : 0));
+        result.add(new EntityMetadataMessage(id, map.getEntryList()));
         return result;
     }
 

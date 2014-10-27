@@ -85,24 +85,26 @@ abstract class LivingEntityStore<T extends GlowLivingEntity> extends EntityStore
         }
 
         EntityEquipment equip = entity.getEquipment();
-        if (compound.isList("Equipment", TagType.COMPOUND)) {
-            List<CompoundTag> list = compound.getCompoundList("Equipment");
-            if (list.size() == 5) {
-                equip.setItemInHand(NbtSerialization.readItem(list.get(0)));
-                equip.setBoots(NbtSerialization.readItem(list.get(1)));
-                equip.setLeggings(NbtSerialization.readItem(list.get(2)));
-                equip.setChestplate(NbtSerialization.readItem(list.get(3)));
-                equip.setHelmet(NbtSerialization.readItem(list.get(4)));
+        if (equip != null) {
+            if (compound.isList("Equipment", TagType.COMPOUND)) {
+                List<CompoundTag> list = compound.getCompoundList("Equipment");
+                if (list.size() == 5) {
+                    equip.setItemInHand(NbtSerialization.readItem(list.get(0)));
+                    equip.setBoots(NbtSerialization.readItem(list.get(1)));
+                    equip.setLeggings(NbtSerialization.readItem(list.get(2)));
+                    equip.setChestplate(NbtSerialization.readItem(list.get(3)));
+                    equip.setHelmet(NbtSerialization.readItem(list.get(4)));
+                }
             }
-        }
-        if (compound.isList("DropChances", TagType.FLOAT)) {
-            List<Float> list = compound.getList("DropChances", TagType.FLOAT);
-            if (list.size() == 5) {
-                equip.setItemInHandDropChance(list.get(0));
-                equip.setBootsDropChance(list.get(1));
-                equip.setLeggingsDropChance(list.get(2));
-                equip.setChestplateDropChance(list.get(3));
-                equip.setHelmetDropChance(list.get(4));
+            if (compound.isList("DropChances", TagType.FLOAT)) {
+                List<Float> list = compound.getList("DropChances", TagType.FLOAT);
+                if (list.size() == 5) {
+                    equip.setItemInHandDropChance(list.get(0));
+                    equip.setBootsDropChance(list.get(1));
+                    equip.setLeggingsDropChance(list.get(2));
+                    equip.setChestplateDropChance(list.get(3));
+                    equip.setHelmetDropChance(list.get(4));
+                }
             }
         }
         if (compound.isByte("CanPickUpLoot")) {

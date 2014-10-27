@@ -10,7 +10,7 @@ class OcelotStore extends TameableStore<GlowOcelot> {
     private static final String SITTING_TAG = "Sitting";
 
     public OcelotStore() {
-        super(GlowOcelot.class, "Ocelot");
+        super(GlowOcelot.class, "Ozelot");
     }
 
     @Override

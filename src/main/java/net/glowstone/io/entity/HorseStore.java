@@ -6,6 +6,7 @@ import net.glowstone.util.nbt.CompoundTag;
 import net.glowstone.util.nbt.TagType;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.Horse.Style;
 import org.bukkit.entity.Horse.Variant;
 import org.bukkit.inventory.ItemStack;
@@ -42,8 +43,10 @@ class HorseStore extends AgeableStore<GlowHorse> {
         entity.setEatingHay(compound.getBool(EATING_HAYSTACK_KEY));
         entity.setCarryingChest(compound.getBool(CHESTED_HORSE_KEY));
         entity.setHasReproduced(compound.getBool(HAS_REPRODUCED_KEY));
-        entity.setStyle(Style.values()[compound.getInt(TYPE_KEY)]);
-        entity.setVariant(Variant.values()[compound.getInt(VARIANT_KEY)]);
+        // TODO Fix this to work with Mojang's style of saving.
+        entity.setStyle(Style.values()[compound.getInt(VARIANT_KEY) >>> 8]);
+        entity.setColor(Horse.Color.values()[compound.getInt(VARIANT_KEY) & 0xFF]);
+        entity.setVariant(Variant.values()[compound.getInt(TYPE_KEY)]);
         entity.setTemper(compound.getInt(TEMPER_Key));
         entity.setTamed(compound.getBool(TAME_KEY));
         if (compound.containsKey(OWNER_UUID_KEY)) {
@@ -69,8 +72,9 @@ class HorseStore extends AgeableStore<GlowHorse> {
         tag.putBool(CHESTED_HORSE_KEY, entity.isCarryingChest());
         tag.putBool(HAS_REPRODUCED_KEY, entity.isHasReproduced());
         tag.putBool(BRED_KEY, true);
-        tag.putInt(TYPE_KEY, entity.getStyle().ordinal());
-        tag.putInt(VARIANT_KEY, entity.getVariant().ordinal());
+        // TODO Fix this to work with Mojang's style of saving.
+        tag.putInt(VARIANT_KEY, entity.getStyle().ordinal() << 8 | entity.getColor().ordinal() & 0xFF);
+        tag.putInt(TYPE_KEY, entity.getVariant().ordinal());
         tag.putBool(SADDLE_KEY, entity.getInventory().getSaddle() != null);
         tag.putInt(TEMPER_Key, entity.getTemper());
         tag.putBool(TAME_KEY, entity.isTamed());

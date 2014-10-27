@@ -27,16 +27,24 @@ class ZombieStore<T extends GlowZombie> extends CreatureStore<T> {
 
     public void load(T entity, CompoundTag compound) {
         super.load(entity, compound);
-        entity.setBaby(compound.getBool(BABY_TAG));
-        entity.setVillager(compound.getBool(VILLAGER_TAG));
+        if (compound.containsKey(BABY_TAG)) {
+            entity.setBaby(compound.getBool(BABY_TAG));
+        }
+        if (compound.containsKey(VILLAGER_TAG)) {
+            entity.setVillager(compound.getBool(VILLAGER_TAG));
+        }
         entity.setConversionTime(compound.getInt(CONVERSION_TIME_TAG));
         entity.setCanBreakDoors(compound.getBool(BREAK_DOORS_TAG));
     }
 
     public void save(T entity, CompoundTag tag) {
         super.save(entity, tag);
-        tag.putBool(BABY_TAG, entity.isBaby());
-        tag.putBool(VILLAGER_TAG, entity.isVillager());
+        if (entity.isBaby()) {
+            tag.putBool(BABY_TAG, entity.isBaby());
+        }
+        if (entity.isVillager()) {
+            tag.putBool(VILLAGER_TAG, entity.isVillager());
+        }
         tag.putInt(CONVERSION_TIME_TAG, entity.getConversionTime());
         tag.putBool(BREAK_DOORS_TAG, entity.canBreakDoors());
     }

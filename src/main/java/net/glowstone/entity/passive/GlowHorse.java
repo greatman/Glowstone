@@ -51,8 +51,8 @@ public class GlowHorse extends GlowTameable implements Horse {
         super(location, EntityType.HORSE);
         Random rand = new Random();
         // Todo make this cleaner and safer to use for spawning random horses
-        this.variant = Variant.values()[rand.nextInt(4)];
-        this.horseStyle = Style.values()[rand.nextInt(3)];
+        this.variant = Variant.HORSE;
+        this.horseStyle = Style.values()[rand.nextInt(4)];
         this.horseColor = Color.values()[rand.nextInt(6)];
     }
 
@@ -220,7 +220,7 @@ public class GlowHorse extends GlowTameable implements Horse {
     }
 
     private int getHorseStyleData() {
-        return 0x00FF & this.horseColor.ordinal() | 0xFF00 & this.horseStyle.ordinal();
+        return this.horseColor.ordinal() & 0xFF | this.horseStyle.ordinal() << 8;
     }
 
     private int getHorseArmorData() {

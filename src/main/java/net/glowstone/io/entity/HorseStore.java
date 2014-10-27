@@ -29,7 +29,7 @@ class HorseStore extends AgeableStore<GlowHorse> {
     private static final String SADDLE_KEY = "Saddle";
 
     public HorseStore() {
-        super(GlowHorse.class, "Horse");
+        super(GlowHorse.class, "EntityHorse");
     }
 
     @Override

@@ -1,10 +1,13 @@
 package net.glowstone;
 
+import com.artemis.*;
+import lombok.Getter;
 import net.glowstone.block.GlowBlock;
 import net.glowstone.constants.GlowBiome;
 import net.glowstone.constants.GlowEffect;
 import net.glowstone.constants.GlowParticle;
 import net.glowstone.entity.*;
+import net.glowstone.entity.EntityManager;
 import net.glowstone.entity.monsters.*;
 import net.glowstone.entity.passive.*;
 import net.glowstone.entity.objects.*;
@@ -13,9 +16,11 @@ import net.glowstone.io.WorldMetadataService.WorldFinalValues;
 import net.glowstone.io.WorldStorageProvider;
 import net.glowstone.io.anvil.AnvilWorldStorageProvider;
 import org.bukkit.*;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
@@ -50,6 +55,7 @@ public final class GlowWorld implements World {
         protected String disambiguate(World subject, String metadataKey) {
             return subject.getName() + ":" + metadataKey;
         }
+
     }
 
     /**
@@ -219,15 +225,18 @@ public final class GlowWorld implements World {
      */
     private int monsterLimit, animalLimit, waterAnimalLimit, ambientLimit;
 
+
+    private final com.artemis.World arthemisWorld;
+
     static {
         registerEntity(Blaze.class, GlowBlaze.class);
         registerEntity(CaveSpider.class, GlowCaveSpider.class);
         registerEntity(Creeper.class, GlowCreeper.class);
         registerEntity(Enderman.class, GlowEnderman.class);
-        registerEntity(Endermite.class, GlowEndermite.class);
+        //registerEntity(Endermite.class, GlowEndermite.class);
         registerEntity(Ghast.class, GlowGhast.class);
         registerEntity(Giant.class, GlowGiant.class);
-        registerEntity(Guardian.class, GlowGuardian.class);
+        //registerEntity(Guardian.class, GlowGuardian.class);
         registerEntity(MagmaCube.class, GlowMagmaCube.class);
         registerEntity(PigZombie.class, GlowPigZombie.class);
         registerEntity(Silverfish.class, GlowSilverfish.class);
@@ -249,7 +258,7 @@ public final class GlowWorld implements World {
         registerEntity(MushroomCow.class, GlowMushroomCow.class);
         registerEntity(Ocelot.class, GlowOcelot.class);
         registerEntity(Pig.class, GlowPig.class);
-        registerEntity(Rabbit.class, GlowRabbit.class);
+        //registerEntity(Rabbit.class, GlowRabbit.class);
         registerEntity(Sheep.class, GlowSheep.class);
         registerEntity(Snowman.class, GlowSnowman.class);
         registerEntity(Squid.class, GlowSquid.class);
@@ -299,6 +308,7 @@ public final class GlowWorld implements World {
         ambientLimit = server.getAmbientSpawnLimit();
         keepSpawnLoaded = server.keepSpawnLoaded();
         difficulty = server.getDifficulty();
+        arthemisWorld = new com.artemis.World();
 
         // read in world data
         WorldFinalValues values = null;
@@ -381,6 +391,11 @@ public final class GlowWorld implements World {
 
     ////////////////////////////////////////////////////////////////////////////
     // Various internal mechanisms
+
+
+    public com.artemis.World getArthemisWorld() {
+        return arthemisWorld;
+    }
 
     /**
      * Get the world chunk manager.

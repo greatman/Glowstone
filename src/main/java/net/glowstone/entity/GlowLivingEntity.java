@@ -42,49 +42,9 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
     private final Map<PotionEffectType, PotionEffect> potionEffects = new HashMap<>();
 
     /**
-     * The entity's health.
-     */
-    protected double health;
-
-    /**
-     * The entity's maximum health.
-     */
-    protected double maxHealth;
-
-    /**
      * The magnitude of the last damage the entity took.
      */
     private double lastDamage;
-
-    /**
-     * How long the entity has until it runs out of air.
-     */
-    private int airTicks = 300;
-
-    /**
-     * The maximum amount of air the entity can hold.
-     */
-    private int maximumAir = 300;
-
-    /**
-     * The number of ticks remaining in the invincibility period.
-     */
-    private int noDamageTicks = 0;
-
-    /**
-     * The default length of the invincibility period.
-     */
-    private int maxNoDamageTicks = 20;
-
-    /**
-     * A custom overhead name to be shown for non-Players.
-     */
-    private String customName;
-
-    /**
-     * Whether the custom name is shown.
-     */
-    private boolean customNameVisible;
 
     /**
      * Whether the entity should be removed if it is too distant from players.

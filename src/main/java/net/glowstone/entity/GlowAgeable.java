@@ -1,6 +1,9 @@
 package net.glowstone.entity;
 
+import com.artemis.Component;
 import com.flowpowered.networking.Message;
+import lombok.Getter;
+import lombok.Setter;
 import net.glowstone.entity.meta.MetadataIndex;
 import net.glowstone.entity.meta.MetadataMap;
 import net.glowstone.net.message.play.entity.EntityMetadataMessage;
@@ -19,6 +22,7 @@ public class GlowAgeable extends GlowCreature implements Ageable {
     private static final int AGE_BABY = -24000;
     private static final int AGE_ADULT = 0;
     protected float width, height;
+    @Getter
     private int age = 0;
     private boolean ageLocked = false;
 
@@ -46,11 +50,6 @@ public class GlowAgeable extends GlowCreature implements Ageable {
                 setAge(currentAge);
             }
         }
-    }
-
-    @Override
-    public final int getAge() {
-        return this.age;
     }
 
     @Override

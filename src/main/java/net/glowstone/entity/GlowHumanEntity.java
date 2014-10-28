@@ -1,6 +1,7 @@
 package net.glowstone.entity;
 
 import com.flowpowered.networking.Message;
+import net.glowstone.entity.components.MetadataComponent;
 import net.glowstone.entity.meta.PlayerProfile;
 import net.glowstone.inventory.*;
 import net.glowstone.net.message.play.entity.EntityEquipmentMessage;
@@ -102,12 +103,12 @@ public abstract class GlowHumanEntity extends GlowLivingEntity implements HumanE
         List<Message> result = new LinkedList<>();
 
         // spawn player
-        int x = Position.getIntX(location);
-        int y = Position.getIntY(location);
-        int z = Position.getIntZ(location);
-        int yaw = Position.getIntYaw(location);
-        int pitch = Position.getIntPitch(location);
-        result.add(new SpawnPlayerMessage(id, profile.getUniqueId(), x, y, z, yaw, pitch, 0, metadata.getEntryList()));
+        int x = Position.getIntX(getLocation());
+        int y = Position.getIntY(getLocation());
+        int z = Position.getIntZ(getLocation());
+        int yaw = Position.getIntYaw(getLocation());
+        int pitch = Position.getIntPitch(getLocation());
+        result.add(new SpawnPlayerMessage(id, profile.getUniqueId(), x, y, z, yaw, pitch, 0, getArthemisEntity().getComponent(MetadataComponent.class).getMetadata().getEntryList()));
 
         // head facing
         result.add(new EntityHeadRotationMessage(id, yaw));

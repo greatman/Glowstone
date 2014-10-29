@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class AirComponent extends Component {
 
-    public static final int MAX_AIR = 300;
-    private int air = MAX_AIR;
+    public static final int DEFAULT_MAX_AIR = 300;
+    private int air = DEFAULT_MAX_AIR, maxAir = DEFAULT_MAX_AIR;
 }

@@ -3,6 +3,10 @@ package net.glowstone.entity;
 import com.flowpowered.networking.Message;
 import net.glowstone.EventFactory;
 import net.glowstone.constants.GlowPotionEffect;
+import net.glowstone.entity.components.AirComponent;
+import net.glowstone.entity.components.HealthComponent;
+import net.glowstone.entity.components.InvincibilityComponent;
+import net.glowstone.entity.components.NameComponent;
 import net.glowstone.inventory.EquipmentMonitor;
 import net.glowstone.net.message.play.entity.EntityEquipmentMessage;
 import org.bukkit.EntityEffect;
@@ -69,7 +73,10 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
     public GlowLivingEntity(Location location) {
         super(location);
         resetMaxHealth();
-        health = maxHealth;
+        getArthemisEntity().edit()
+                .add(new AirComponent())
+                .add(new NameComponent());
+        getArthemisEntity().getComponent(HealthComponent.class).setHealth(getArthemisEntity().getComponent(HealthComponent.class).getMaxHealth());
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -170,42 +177,42 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
 
     @Override
     public int getNoDamageTicks() {
-        return noDamageTicks;
+        return getArthemisEntity().getComponent(InvincibilityComponent.class).getInvincibilityTicks();
     }
 
     @Override
     public void setNoDamageTicks(int ticks) {
-        noDamageTicks = ticks;
+        getArthemisEntity().getComponent(InvincibilityComponent.class).setInvincibilityTicks(ticks);
     }
 
     @Override
     public int getMaximumNoDamageTicks() {
-        return maxNoDamageTicks;
+        return getArthemisEntity().getComponent(InvincibilityComponent.class).getMaxInvincibilityTicks();
     }
 
     @Override
     public void setMaximumNoDamageTicks(int ticks) {
-        maxNoDamageTicks = ticks;
+        getArthemisEntity().getComponent(InvincibilityComponent.class).setMaxInvincibilityTicks(ticks);
     }
 
     @Override
     public int getRemainingAir() {
-        return airTicks;
+        return getArthemisEntity().getComponent(AirComponent.class).getAir();
     }
 
     @Override
     public void setRemainingAir(int ticks) {
-        airTicks = Math.min(ticks, maximumAir);
+        getArthemisEntity().getComponent(AirComponent.class).setAir(Math.min(ticks, getMaximumAir()));
     }
 
     @Override
     public int getMaximumAir() {
-        return maximumAir;
+        return getArthemisEntity().getComponent(AirComponent.class).getMaxAir();
     }
 
     @Override
     public void setMaximumAir(int ticks) {
-        maximumAir = Math.max(0, ticks);
+        getArthemisEntity().getComponent(AirComponent.class).setMaxAir(Math.max(0, ticks));
     }
 
     @Override
@@ -332,19 +339,8 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
     // Health
 
     @Override
-    public double getHealth() {
-        return health;
-    }
-
-    @Override
     public void setHealth(double health) {
-        if (health < 0) {
-            health = 0;
-        }
-        if (health > maxHealth) {
-            health = maxHealth;
-        }
-        this.health = health;
+        getArthemisEntity().getComponent(HealthComponent.class).setHealth(health);
     }
 
     @Override
@@ -365,7 +361,7 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
     @Override
     public void damage(double amount, Entity source, EntityDamageEvent.DamageCause cause) {
         // invincibility timer
-        if (noDamageTicks > 0 || health <= 0) {
+        if (getArthemisEntity().getComponent(InvincibilityComponent.class).getInvincibilityTicks() > 0 || getArthemisEntity().getComponent(HealthComponent.class).getHealth() <= 0) {
             return;
         }
 
@@ -419,17 +415,17 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
 
     @Override
     public double getMaxHealth() {
-        return maxHealth;
+        return getArthemisEntity().getComponent(HealthComponent.class).getMaxHealth();
     }
 
     @Override
     public void setMaxHealth(double health) {
-        maxHealth = health;
+        getArthemisEntity().getComponent(HealthComponent.class).setMaxHealth(health);
     }
 
     @Override
     public void resetMaxHealth() {
-        maxHealth = 20;
+        getArthemisEntity().getComponent(HealthComponent.class).setMaxHealth(HealthComponent.DEFAULT_MAX_HEALTH);
     }
 
     @Override
@@ -553,22 +549,22 @@ public abstract class GlowLivingEntity extends GlowEntity implements LivingEntit
 
     @Override
     public String getCustomName() {
-        return customName;
+        return getArthemisEntity().getComponent(NameComponent.class).getCustomName();
     }
 
     @Override
     public void setCustomName(String name) {
-        customName = name;
+        getArthemisEntity().getComponent(NameComponent.class).setCustomName(name);
     }
 
     @Override
     public boolean isCustomNameVisible() {
-        return customNameVisible;
+        return getArthemisEntity().getComponent(NameComponent.class).isCustomNameVisible();
     }
 
     @Override
     public void setCustomNameVisible(boolean flag) {
-        customNameVisible = flag;
+        getArthemisEntity().getComponent(NameComponent.class).setCustomNameVisible(flag);
     }
 
     ////////////////////////////////////////////////////////////////////////////

@@ -431,7 +431,10 @@ public final class GlowWorld implements World {
         // pulse players last so they actually see that other entities have
         // moved. unfortunately pretty hacky. not a problem for players b/c
         // their position is modified by session ticking.
-        for (GlowEntity entity : temp) {
+        arthemisWorld.process();
+        arthemisWorld.
+        //TODO greatman - Ticks with artemis instead (done)
+        /**for (GlowEntity entity : temp) {
             if (entity instanceof GlowPlayer) {
                 players.add(entity);
             } else {
@@ -444,7 +447,7 @@ public final class GlowWorld implements World {
 
         for (GlowEntity entity : temp) {
             entity.reset();
-        }
+        }*//
 
         // Tick the world age and time of day
         // Modulus by 24000, the tick length of a day

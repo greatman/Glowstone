@@ -2,23 +2,15 @@ package net.glowstone.entity;
 
 import com.flowpowered.networking.Message;
 import lombok.Getter;
-import lombok.Setter;
 import net.glowstone.EventFactory;
 import net.glowstone.GlowChunk;
 import net.glowstone.GlowServer;
 import net.glowstone.GlowWorld;
 import net.glowstone.entity.components.*;
-import net.glowstone.entity.meta.MetadataIndex;
 import net.glowstone.entity.meta.MetadataMap;
 import net.glowstone.entity.physics.BoundingBox;
 import net.glowstone.entity.physics.EntityBoundingBox;
-import net.glowstone.net.message.play.entity.EntityHeadRotationMessage;
-import net.glowstone.net.message.play.entity.EntityMetadataMessage;
-import net.glowstone.net.message.play.entity.EntityRotationMessage;
-import net.glowstone.net.message.play.entity.EntityTeleportMessage;
-import net.glowstone.net.message.play.entity.EntityVelocityMessage;
-import net.glowstone.net.message.play.entity.RelativeEntityPositionMessage;
-import net.glowstone.net.message.play.entity.RelativeEntityPositionRotationMessage;
+import net.glowstone.net.message.play.entity.*;
 import net.glowstone.util.Position;
 import org.apache.commons.lang.Validate;
 import org.bukkit.EntityEffect;
@@ -33,8 +25,6 @@ import org.bukkit.event.entity.EntityPortalEnterEvent;
 import org.bukkit.event.entity.EntityPortalEvent;
 import org.bukkit.event.entity.EntityPortalExitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
-import org.bukkit.metadata.MetadataStore;
-import org.bukkit.metadata.MetadataStoreBase;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
@@ -92,7 +82,6 @@ public abstract class GlowEntity implements Entity {
         arthemisEntity = world.getArthemisWorld().createEntity()
                 .edit()
                 .add(new LocationComponent(location.clone(), location.clone()))
-                .add(new NameComponent())
                 .add(new VelocityComponent())
                 .add(new LifeComponent())
                 .add(new FallGroundComponent())
